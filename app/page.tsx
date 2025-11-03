@@ -174,55 +174,58 @@ export default function Home() {
               <>
                 {/* Filters Section */}
                 <div className="mb-8">
-                  {/* Search Box - Full width on mobile, positioned at top */}
-                  <div className="mb-4">
-                    <input
-                      type="text"
-                      placeholder="Search resorts..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal focus:border-transparent"
-                    />
+                  {/* Search Box and Most Snow Banner - Side by side on desktop, stacked on mobile */}
+                  <div className="flex flex-col lg:flex-row gap-4 mb-4">
+                    {/* Search Box */}
+                    <div className="flex-1">
+                      <input
+                        type="text"
+                        placeholder="Search resorts..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal focus:border-transparent"
+                      />
+                    </div>
+
+                    {/* Most Snow Banner */}
+                    {(() => {
+                      const filteredData = selectedRegion === "All"
+                        ? weatherData
+                        : weatherData.filter((data) => data.resort.region === selectedRegion);
+
+                      if (filteredData.length === 0) return null;
+
+                      const resortSnowTotals = filteredData.map((data) => {
+                        const totalSnow = data.forecast.mid.reduce(
+                          (sum, day) => sum + day.snowAccumulation,
+                          0
+                        );
+                        return { resort: data.resort, totalSnow };
+                      });
+
+                      const topResort = resortSnowTotals.reduce((max, current) =>
+                        current.totalSnow > max.totalSnow ? current : max
+                      );
+
+                      if (topResort.totalSnow > 0) {
+                        return (
+                          <a
+                            href={`/resort/${topResort.resort.id}`}
+                            className="flex items-center gap-2 px-3 py-2 bg-teal/10 hover:bg-teal/20 border border-teal/30 rounded-lg transition-all whitespace-nowrap"
+                          >
+                            <span className="text-lg">⭐</span>
+                            <div className="text-left">
+                              <p className="text-xs text-slate-400">Most snow</p>
+                              <p className="text-sm text-white font-medium">
+                                {topResort.resort.name} <span className="text-teal-light">{topResort.totalSnow.toFixed(0)}"</span>
+                              </p>
+                            </div>
+                          </a>
+                        );
+                      }
+                      return null;
+                    })()}
                   </div>
-
-                  {/* Most Snow Banner - Below search on mobile */}
-                  {(() => {
-                    const filteredData = selectedRegion === "All"
-                      ? weatherData
-                      : weatherData.filter((data) => data.resort.region === selectedRegion);
-
-                    if (filteredData.length === 0) return null;
-
-                    const resortSnowTotals = filteredData.map((data) => {
-                      const totalSnow = data.forecast.mid.reduce(
-                        (sum, day) => sum + day.snowAccumulation,
-                        0
-                      );
-                      return { resort: data.resort, totalSnow };
-                    });
-
-                    const topResort = resortSnowTotals.reduce((max, current) =>
-                      current.totalSnow > max.totalSnow ? current : max
-                    );
-
-                    if (topResort.totalSnow > 0) {
-                      return (
-                        <a
-                          href={`/resort/${topResort.resort.id}`}
-                          className="flex items-center gap-2 px-3 py-2 bg-teal/10 hover:bg-teal/20 border border-teal/30 rounded-lg transition-all mb-4"
-                        >
-                          <span className="text-lg">⭐</span>
-                          <div className="text-left">
-                            <p className="text-xs text-slate-400">Most snow</p>
-                            <p className="text-sm text-white font-medium">
-                              {topResort.resort.name} <span className="text-teal-light">{topResort.totalSnow.toFixed(0)}"</span>
-                            </p>
-                          </div>
-                        </a>
-                      );
-                    }
-                    return null;
-                  })()}
 
                   {/* Mobile: Compact dropdown filters */}
                   <div className="lg:hidden space-y-3 mb-6">
