@@ -11,6 +11,7 @@ import LoadingState from "@/components/LoadingState";
 import ErrorState from "@/components/ErrorState";
 import TodayConditionSummary from "@/components/TodayConditionSummary";
 import HourlyForecast from "@/components/HourlyForecast";
+import HourlyRatingBar from "@/components/HourlyRatingBar";
 import WindDirectionDisplay, { SunTimesCard } from "@/components/WindDirectionDisplay";
 import SnowAccumulationDisplay from "@/components/SnowAccumulationDisplay";
 import { getSunriseSunset } from "@/lib/utils/sunriseSunset";
@@ -676,6 +677,19 @@ export default function ResortPage() {
                 })}
               </div>
             </div>
+
+            {/* Hourly Rating Bar */}
+            {weatherData.hourly && weatherData.current && (
+              <HourlyRatingBar
+                hourlyData={weatherData.hourly[selectedElevation]}
+                conditions={weatherData.current[selectedElevation]}
+                targetDate={forecast[selectedElevation][selectedDay]?.date}
+                latitude={resort.latitude}
+                longitude={resort.longitude}
+                selectedHourIndex={selectedHourIndex}
+                onHourIndexChange={setSelectedHourIndex}
+              />
+            )}
 
             {/* Snow Accumulation Display */}
             {weatherData.hourly && (
