@@ -77,6 +77,11 @@ export const trailMapUrls: Record<string, TrailMapData> = {
     pdfUrl: "https://www.niseko.ne.jp/en/wp-content/uploads/2020/08/2025-2026_WEBMAP_EG.pdf",
     source: "Niseko United",
   },
+  "banff-sunshine": {
+    imageUrl: "https://cdn.bfldr.com/WIENNW6Q/as/pvm4kwxwcrm534kmcq3v69f6/Banff_Sunshine?auto=webp&format=png&width=2048",
+    pdfUrl: "https://www.skibanff.com/wp-content/uploads/2025/09/25_TrailMap_GoatsEye_web.pdf",
+    source: "Banff Sunshine Village",
+  },
   livigno: {
     imageUrl: "https://cdn.bfldr.com/WIENNW6Q/as/xxpwjz8qrfvkt7gkqmh7v5w/Livigno?auto=webp&width=2048",
     pdfUrl: "https://www.livigno.eu/hubfs/Skipass%20Livigno%20mappa%20impianti%20completa%20A4-2024_2025%20(1)-1-1.pdf",
