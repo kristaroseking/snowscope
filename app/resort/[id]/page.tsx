@@ -12,8 +12,7 @@ import ErrorState from "@/components/ErrorState";
 import TodayConditionSummary from "@/components/TodayConditionSummary";
 import HourlyForecast from "@/components/HourlyForecast";
 import HourlyRatingBar from "@/components/HourlyRatingBar";
-import WindDirectionDisplay, { SunTimesCard } from "@/components/WindDirectionDisplay";
-import SnowAccumulationDisplay from "@/components/SnowAccumulationDisplay";
+import CombinedWindSnowDisplay, { SunTimesCard } from "@/components/CombinedWindSnowDisplay";
 import { getSunriseSunset } from "@/lib/utils/sunriseSunset";
 import { ResortWeather, LiveLiftStatus, LiveTrailStatus } from "@/types";
 import { resortHistories } from "@/lib/resortHistories";
@@ -691,21 +690,9 @@ export default function ResortPage() {
               />
             )}
 
-            {/* Snow Accumulation Display */}
+            {/* Combined Wind & Snow Display */}
             {weatherData.hourly && (
-              <SnowAccumulationDisplay
-                hourlyData={weatherData.hourly[selectedElevation]}
-                targetDate={forecast[selectedElevation][selectedDay]?.date}
-                latitude={resort.latitude}
-                longitude={resort.longitude}
-                selectedHourIndex={selectedHourIndex}
-                onHourIndexChange={setSelectedHourIndex}
-              />
-            )}
-
-            {/* Wind Direction Display */}
-            {weatherData.hourly && (
-              <WindDirectionDisplay
+              <CombinedWindSnowDisplay
                 hourlyData={weatherData.hourly[selectedElevation]}
                 targetDate={forecast[selectedElevation][selectedDay]?.date}
                 latitude={resort.latitude}
