@@ -1,100 +1,341 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState, useMemo } from "react";
+import dynamic from "next/dynamic";
+import ResortForecastRow from "@/components/ResortForecastRow";
+import SnowscopeLogo from "@/components/SnowscopeLogo";
+import LoadingState from "@/components/LoadingState";
+import ErrorState from "@/components/ErrorState";
+import { ResortWeather, Region } from "@/types";
+
+// Dynamically import the map to avoid SSR issues
+const ResortMap = dynamic(() => import("@/components/ResortMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full bg-slate-100 rounded-card border border-slate-200 flex items-center justify-center">
+      <p className="text-slate-500">Loading map...</p>
+    </div>
+  ),
+});
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [weatherData, setWeatherData] = useState<ResortWeather[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedRegion, setSelectedRegion] = useState<Region | "All">("All");
+  const [selectedPass, setSelectedPass] = useState<"All" | "Epic" | "Ikon" | "Indy" | "Independent">("All");
+  const [selectedTab, setSelectedTab] = useState<"resorts" | "backcountry" | "trip-planning" | "map-view">("resorts");
+  const [searchQuery, setSearchQuery] = useState("");
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    async function fetchWeather() {
+      try {
+        const response = await fetch("/api/weather");
+        const result = await response.json();
+
+        if (result.success) {
+          setWeatherData(result.data);
+        } else {
+          setError(result.error || "Failed to fetch weather data");
+        }
+      } catch (err) {
+        setError("Failed to fetch weather data");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchWeather();
+  }, []);
+
+  // Filter resorts by selected region and pass
+  const filteredWeatherData = useMemo(() => {
+    let filtered = weatherData;
+
+    // Filter by search query
+    if (searchQuery.trim() !== "") {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter((weather) =>
+        weather.resort.name.toLowerCase().includes(query) ||
+        weather.resort.state.toLowerCase().includes(query) ||
+        weather.resort.country.toLowerCase().includes(query)
+      );
+    }
+
+    // Filter by region
+    if (selectedRegion !== "All") {
+      filtered = filtered.filter((weather) => weather.resort.region === selectedRegion);
+    }
+
+    // Filter by pass
+    if (selectedPass !== "All") {
+      filtered = filtered.filter((weather) => {
+        // If filtering for "Independent", show resorts with no passes OR passes that include "Independent"
+        if (selectedPass === "Independent") {
+          return !weather.resort.passes || weather.resort.passes.length === 0 || weather.resort.passes.includes("Independent");
+        }
+        // For other passes, check if the resort has that pass
+        return weather.resort.passes?.includes(selectedPass);
+      });
+    }
+
+    return filtered;
+  }, [weatherData, selectedRegion, selectedPass, searchQuery]);
+
+  // Get all resorts for the map
+  const allResorts = useMemo(() => {
+    return weatherData.map((weather) => weather.resort);
+  }, [weatherData]);
+
+  // Define region options
+  const regions: (Region | "All")[] = [
+    "All",
+    "Northeast USA",
+    "Western USA",
+    "Canada",
+    "International",
+  ];
+
+  return (
+    <div className="min-h-screen bg-slate-900">
+      <header className="bg-slate-800 border-b border-slate-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <SnowscopeLogo className="h-12 w-auto" />
+          <p className="text-slate-300 mt-3 text-base leading-relaxed">
+            Snowformation ⛄
+          </p>
         </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Tabs with Most Snow Banner */}
+        <div className="mb-8 border-b border-slate-700">
+          <div className="flex items-center justify-between">
+            <div className="flex gap-8">
+              <button
+                onClick={() => setSelectedTab("resorts")}
+                className={`pb-4 px-2 text-lg font-semibold transition-all relative ${
+                  selectedTab === "resorts"
+                    ? "text-white"
+                    : "text-slate-400 hover:text-slate-300"
+                }`}
+              >
+                Resorts
+                {selectedTab === "resorts" && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-teal rounded-full"></div>
+                )}
+              </button>
+              <button
+                onClick={() => setSelectedTab("backcountry")}
+                className={`pb-4 px-2 text-lg font-semibold transition-all relative ${
+                  selectedTab === "backcountry"
+                    ? "text-white"
+                    : "text-slate-400 hover:text-slate-300"
+                }`}
+              >
+                Backcountry
+                {selectedTab === "backcountry" && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-teal rounded-full"></div>
+                )}
+              </button>
+              <button
+                onClick={() => setSelectedTab("trip-planning")}
+                className={`pb-4 px-2 text-lg font-semibold transition-all relative ${
+                  selectedTab === "trip-planning"
+                    ? "text-white"
+                    : "text-slate-400 hover:text-slate-300"
+                }`}
+              >
+                Trip Planning
+                {selectedTab === "trip-planning" && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-teal rounded-full"></div>
+                )}
+              </button>
+              <button
+                onClick={() => setSelectedTab("map-view")}
+                className={`pb-4 px-2 text-lg font-semibold transition-all relative ${
+                  selectedTab === "map-view"
+                    ? "text-white"
+                    : "text-slate-400 hover:text-slate-300"
+                }`}
+              >
+                Map View
+                {selectedTab === "map-view" && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-teal rounded-full"></div>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {loading && <LoadingState />}
+        {error && <ErrorState message={error} />}
+        {!loading && !error && (
+          <>
+            {selectedTab === "resorts" && (
+              <>
+                {/* Filters Section */}
+                <div className="mb-8">
+                  <div className="flex items-start justify-between gap-4 mb-6">
+                    <div className="flex-1">
+                      {/* Geographic Region Section */}
+                      <div className="mb-6">
+                        <h3 className="text-xs text-slate-500 uppercase tracking-wide mb-3">
+                          Geographic Region
+                        </h3>
+                        <div className="flex gap-3 flex-wrap">
+                          {regions.map((region) => (
+                            <button
+                              key={region}
+                              onClick={() => setSelectedRegion(region)}
+                              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                                selectedRegion === region
+                                  ? "bg-teal text-white shadow-lg"
+                                  : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600"
+                              }`}
+                            >
+                              {region}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Mountain Daddy Section */}
+                      <div>
+                        <h3 className="text-xs text-slate-500 uppercase tracking-wide mb-3">
+                          Mountain Daddy
+                        </h3>
+                        <div className="flex gap-3 flex-wrap">
+                          {(["All", "Epic", "Ikon", "Indy", "Independent"] as const).map((pass) => (
+                            <button
+                              key={pass}
+                              onClick={() => setSelectedPass(pass)}
+                              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                                selectedPass === pass
+                                  ? "bg-purple text-white shadow-lg"
+                                  : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600"
+                              }`}
+                            >
+                              {pass}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Search Box */}
+                    <div className="flex flex-col items-end gap-4">
+                      <div className="w-80">
+                        <input
+                          type="text"
+                          placeholder="Search resorts..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal focus:border-transparent"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Most Snow Banner - Next to filters */}
+                    {(() => {
+                    const filteredData = selectedRegion === "All"
+                      ? weatherData
+                      : weatherData.filter((data) => data.resort.region === selectedRegion);
+
+                    if (filteredData.length === 0) return null;
+
+                    const resortSnowTotals = filteredData.map((data) => {
+                      const totalSnow = data.forecast.mid.reduce(
+                        (sum, day) => sum + day.snowAccumulation,
+                        0
+                      );
+                      return { resort: data.resort, totalSnow };
+                    });
+
+                    const topResort = resortSnowTotals.reduce((max, current) =>
+                      current.totalSnow > max.totalSnow ? current : max
+                    );
+
+                    if (topResort.totalSnow > 0) {
+                      return (
+                        <a
+                          href={`/resort/${topResort.resort.id}`}
+                          className="flex items-center gap-2 px-3 py-2 bg-teal/10 hover:bg-teal/20 border border-teal/30 rounded-lg transition-all"
+                        >
+                          <span className="text-lg">⭐</span>
+                          <div className="text-left">
+                            <p className="text-xs text-slate-400">Most snow</p>
+                            <p className="text-sm text-white font-medium">
+                              {topResort.resort.name} <span className="text-teal-light">{topResort.totalSnow.toFixed(0)}"</span>
+                            </p>
+                          </div>
+                        </a>
+                      );
+                    }
+                    return null;
+                    })()}
+                  </div>
+                </div>
+
+                {/* 10-Day Forecasts */}
+                <div className="space-y-4">
+                  {filteredWeatherData.map((weatherData) => (
+                    <ResortForecastRow
+                      key={weatherData.resort.id}
+                      weatherData={weatherData}
+                    />
+                  ))}
+                  {filteredWeatherData.length === 0 && (
+                    <div className="text-center py-12 text-slate-400">
+                      No resorts found for this region.
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+
+            {selectedTab === "backcountry" && (
+              <div className="bg-slate-800 rounded-card shadow-sm p-12 border border-slate-700">
+                <div className="text-center">
+                  <h2 className="text-2xl font-semibold text-white mb-4">
+                    Backcountry Coming Soon
+                  </h2>
+                  <p className="text-slate-300 text-lg">
+                    We're working on adding backcountry conditions and forecasting.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {selectedTab === "trip-planning" && (
+              <div className="bg-slate-800 rounded-card shadow-sm p-12 border border-slate-700">
+                <div className="text-center">
+                  <h2 className="text-2xl font-semibold text-white mb-4">
+                    Trip Planning Coming Soon
+                  </h2>
+                  <p className="text-slate-300 text-lg">
+                    We're working on tools to help you plan your perfect ski trip.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {selectedTab === "map-view" && (
+              <section>
+                <ResortMap resorts={allResorts} />
+              </section>
+            )}
+          </>
+        )}
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="bg-slate-800 border-t border-slate-700 mt-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <p className="text-center text-slate-400 text-sm">
+            Powered by NOAA, GFS, and HRRR weather models
+          </p>
+        </div>
       </footer>
     </div>
   );

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/kristaking/Desktop/snowline/Snowscope/app.py", line 16, in <module>
+    from stowe_scraper import get_stowe_conditions, get_stowe_forecast
+  File "/Users/kristaking/Desktop/snowline/Snowscope/stowe_scraper.py", line 8, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'

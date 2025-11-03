@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snowscope - Stowe Vermont Conditions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(180deg, #0a0e27 0%, #1a1f3a 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 20px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .location {
+            text-align: right;
+        }
+        
+        .location-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .location-details {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .current-rating {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .rating-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .rating-circle .value {
+            font-size: 48px;
+            line-height: 1;
+        }
+        
+        .rating-circle .label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        .rating-details {
+            flex: 1;
+        }
+        
+        .rating-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .rating-subtitle {
+            font-size: 18px;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+        
+        .time-segments {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .time-segment {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .time-segment.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .time-segment .time-label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        
+        .time-segment .rating-badge {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .time-segment .temp {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .forecast-section {
+            margin-top: 40px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .forecast-slider {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+        
+        .forecast-track {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.3s ease;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+        
+        .day-card {
+            min-width: 280px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .day-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-5px);
+        }
+        
+        .day-card .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .day-card .day-name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .day-card .day-date {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .day-card .rating-display {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .day-card .day-stats {
+            font-size: 14px;
+        }
+        
+        .day-card .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+        
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .slider-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .slider-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .slider-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            opacity: 0.7;
+        }
+        
+        .snow-icon {
+            font-size: 40px;
+            animation: float 3s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Rating Colors */
+        .rating-BAD { background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); }
+        .rating-POOR { background: linear-gradient(135deg, #ff8c00 0%, #e67e00 100%); }
+        .rating-FAIR { background: linear-gradient(135deg, #90ee90 0%, #7acc7a 100%); }
+        .rating-GOOD { background: linear-gradient(135deg, #28a745 0%, #218838 100%); }
+        .rating-EXCELLENT { background: linear-gradient(135deg, #006400 0%, #004d00 100%); }
+        .rating-PERFECT { background: linear-gradient(135deg, #9370db 0%, #7b68ee 100%); }
+        .rating-BLOWER { background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%); }
+        
+        .text-BAD { color: #dc3545; }
+        .text-POOR { color: #ff8c00; }
+        .text-FAIR { color: #90ee90; }
+        .text-GOOD { color: #28a745; }
+        .text-EXCELLENT { color: #006400; }
+        .text-EXCELLENT { color: #006400; }
+        .text-PERFECT { color: #9370db; }
+        .text-BLOWER { color: #ff69b4; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">🎿 Snowscope</div>
+            <div class="location">
+                <div class="location-name">Stowe, Vermont</div>
+                <div class="location-details">Stowe Mountain Resort</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="hero-section" id="heroSection">
+            <div class="loading" id="loading">Loading Stowe conditions...</div>
+            
+            <div id="currentConditions" style="display: none;">
+                <div class="current-rating">
+                    <div class="rating-circle" id="ratingCircle">
+                        <div class="snow-icon">❄️</div>
+                        <div class="value" id="ratingValue">-</div>
+                        <div class="label" id="ratingPoints">- / 100</div>
+                    </div>
+                    
+                    <div class="rating-details">
+                        <div class="rating-title" id="ratingTitle">Loading...</div>
+                        <div class="rating-subtitle" id="ratingSubtitle">Current conditions at Stowe Mountain</div>
+                        
+                        <div class="time-segments">
+                            <div class="time-segment active" data-time="morning">
+                                <div class="time-label">Morning</div>
+                                <div class="rating-badge" id="morningRating">-</div>
+                                <div class="temp" id="morningTemp">-</div>
+                            </div>
+                            <div class="time-segment" data-time="midday">
+                                <div class="time-label">Midday</div>
+                                <div class="rating-badge" id="middayRating">-</div>
+                                <div class="temp" id="middayTemp">-</div>
+                            </div>
+                            <div class="time-segment" data-time="night">
+                                <div class="time-label">Night</div>
+                                <div class="rating-badge" id="nightRating">-</div>
+                                <div class="temp" id="nightTemp">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">New Snow (24h)</div>
+                        <div class="stat-value" id="newSnow">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Base Depth</div>
+                        <div class="stat-value" id="baseDepth">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Temperature</div>
+                        <div class="stat-value" id="temperature">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Wind Speed</div>
+                        <div class="stat-value" id="windSpeed">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Snow Quality</div>
+                        <div class="stat-value" id="snowQuality" style="font-size: 20px;">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="forecast-section">
+            <div class="section-title">
+                <span>10-Day Forecast</span>
+            </div>
+            
+            <div class="forecast-slider">
+                <div class="forecast-track" id="forecastTrack">
+                    <div class="loading">Loading forecast...</div>
+                </div>
+            </div>
+            
+            <div class="slider-controls">
+                <button class="slider-btn" id="prevBtn" onclick="slideForecast(-1)">← Previous</button>
+                <span id="sliderInfo">Day 1-3 of 10</span>
+                <button class="slider-btn" id="nextBtn" onclick="slideForecast(1)">Next →</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        let forecastData = [];
+        const cardsPerView = 3;
+        
+        const ratingColors = {
+            'BAD': '#dc3545',
+            'POOR': '#ff8c00',
+            'FAIR': '#90ee90',
+            'GOOD': '#28a745',
+            'EXCELLENT': '#006400',
+            'PERFECT': '#9370db',
+            'BLOWER': '#ff69b4'
+        };
+        
+        async function loadStoweConditions() {
+            try {
+                const response = await fetch('/api/stowe/current');
+                const data = await response.json();
+                
+                displayCurrentConditions(data);
+                
+                // Load forecast
+                await loadForecast();
+                
+            } catch (error) {
+                console.error('Error loading conditions:', error);
+                document.getElementById('loading').textContent = 'Error loading conditions. Please refresh.';
+            }
+        }
+        
+        function displayCurrentConditions(data) {
+            const rating = data.rating;
+            const color = data.rating_color;
+            const points = data.total_weighted_points;
+            
+            // Main rating circle
+            const ratingCircle = document.getElementById('ratingCircle');
+            ratingCircle.className = `rating-circle rating-${rating}`;
+            document.getElementById('ratingValue').textContent = rating;
+            document.getElementById('ratingPoints').textContent = `${Math.round(points)} / 100`;
+            
+            // Rating title
+            document.getElementById('ratingTitle').textContent = `${rating} Conditions`;
+            document.getElementById('ratingTitle').className = `rating-title text-${rating}`;
+            
+            // Time segments (morning, midday, night)
+            displayTimeSegments(data.time_ratings);
+            
+            // Stats
+            document.getElementById('newSnow').textContent = data.conditions.new_snow_24h.toFixed(1) + '"';
+            document.getElementById('baseDepth').textContent = data.conditions.base_depth.toFixed(0) + '"';
+            document.getElementById('temperature').textContent = data.conditions.temperature.toFixed(0) + '°F';
+            document.getElementById('windSpeed').textContent = data.conditions.wind_speed.toFixed(0) + ' mph';
+            document.getElementById('snowQuality').textContent = data.conditions.snow_quality.replace(' density snow', '');
+            
+            // Hide loading, show content
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('currentConditions').style.display = 'block';
+        }
+        
+        function displayTimeSegments(timeRatings) {
+            const segments = ['morning', 'midday', 'night'];
+            segments.forEach(segment => {
+                const rating = timeRatings[segment];
+                const element = document.getElementById(`${segment}Rating`);
+                element.textContent = rating.rating;
+                element.className = `rating-badge text-${rating.rating}`;
+                document.getElementById(`${segment}Temp`).textContent = `${rating.temperature}°F`;
+            });
+        }
+        
+        async function loadForecast() {
+            try {
+                const response = await fetch('/api/stowe/forecast');
+                forecastData = await response.json();
+                renderForecast();
+            } catch (error) {
+                console.error('Error loading forecast:', error);
+            }
+        }
+        
+        function renderForecast() {
+            const track = document.getElementById('forecastTrack');
+            track.innerHTML = '';
+            
+            forecastData.forEach(day => {
+                const card = document.createElement('div');
+                card.className = 'day-card';
+                
+                card.innerHTML = `
+                    <div class="day-header">
+                        <div>
+                            <div class="day-name">${day.day_name}</div>
+                            <div class="day-date">${day.date}</div>
+                        </div>
+                    </div>
+                    <div class="rating-display rating-${day.rating}" style="background: ${day.rating_color};">
+                        <div>${day.rating}</div>
+                        <div style="font-size: 20px; margin-top: 5px;">${Math.round(day.points)}</div>
+                    </div>
+                    <div class="day-stats">
+                        <div class="stat-row">
+                            <span>🌡️ Temp:</span>
+                            <span>${day.temperature}°F</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>💨 Wind:</span>
+                            <span>${day.wind_speed} mph</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>❄️ New Snow:</span>
+                            <span>${day.new_snow.toFixed(1)}"</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>📏 Base:</span>
+                            <span>${day.base_depth.toFixed(0)}"</span>
+                        </div>
+                    </div>
+                `;
+                
+                track.appendChild(card);
+            });
+            
+            updateSlider();
+        }
+        
+        function slideForecast(direction) {
+            const maxSlide = Math.max(0, forecastData.length - cardsPerView);
+            currentSlide = Math.max(0, Math.min(maxSlide, currentSlide + direction * cardsPerView));
+            updateSlider();
+        }
+        
+        function updateSlider() {
+            const track = document.getElementById('forecastTrack');
+            const offset = -currentSlide * (280 + 20);
+            track.style.transform = `translateX(${offset}px)`;
+            
+            const start = currentSlide + 1;
+            const end = Math.min(currentSlide + cardsPerView, forecastData.length);
+            document.getElementById('sliderInfo').textContent = `Day ${start}-${end} of ${forecastData.length}`;
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide >= forecastData.length - cardsPerView;
+        }
+        
+        // Load conditions on page load
+        window.addEventListener('load', () => {
+            loadStoweConditions();
+        });
+        
+        // Auto-refresh every 30 minutes
+        setInterval(loadStoweConditions, 30 * 60 * 1000);
+    </script>
+</body>
+</html>
+

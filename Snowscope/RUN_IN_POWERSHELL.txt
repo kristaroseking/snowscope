@@ -1,0 +1,16 @@
+=== COPY AND PASTE THESE COMMANDS INTO POWERSHELL ===
+
+# Step 1: Navigate to the folder
+cd "C:\Users\Krista\OneDrive\Snowscope"
+
+# Step 2: Install Flask (if needed)
+& "C:\Users\Krista\AppData\Local\Programs\Python\Python314\python.exe" -m pip install Flask
+
+# Step 3: Start the server
+& "C:\Users\Krista\AppData\Local\Programs\Python\Python314\python.exe" app.py
+
+=== OR JUST RUN THE SCRIPT ===
+
+cd "C:\Users\Krista\OneDrive\Snowscope"
+.\start_server.ps1
+
