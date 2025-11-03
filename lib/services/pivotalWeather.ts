@@ -45,7 +45,7 @@ export async function fetchGFSModelData(
       `&hourly=temperature_2m,snowfall,windspeed_10m,winddirection_10m,precipitation` +
       `&daily=temperature_2m_max,temperature_2m_min,snowfall_sum,windspeed_10m_max` +
       `&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch` +
-      `&timezone=auto&forecast_days=16`;
+      `&timezone=auto&forecast_days=16&past_hours=24`;
 
     const response = await fetch(url);
 
@@ -75,7 +75,7 @@ export async function fetchGEFSEnsembleData(
       `&hourly=temperature_2m,snowfall,windspeed_10m` +
       `&models=gfs_seamless` +
       `&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch` +
-      `&forecast_days=16`;
+      `&forecast_days=16&past_hours=24`;
 
     const response = await fetch(url);
 
@@ -105,7 +105,7 @@ export async function fetchHRRRModelData(
       `&hourly=temperature_2m,snowfall,windspeed_10m,winddirection_10m` +
       `&models=hrrr` +
       `&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch` +
-      `&forecast_days=2`; // HRRR only goes 48 hours
+      `&forecast_days=2&past_hours=24`; // HRRR only goes 48 hours
 
     const response = await fetch(url);
 
