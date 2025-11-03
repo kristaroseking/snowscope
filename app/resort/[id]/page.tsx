@@ -677,28 +677,11 @@ export default function ResortPage() {
               </div>
             </div>
 
-            {/* Selected Day's Condition Summary */}
-            <TodayConditionSummary
-              elevation={selectedElevation}
-              conditions={current[selectedElevation]}
-              hourlyData={weatherData.hourly?.[selectedElevation]}
-              selectedDayIndex={selectedDay}
-              forecastDay={forecast[selectedElevation][selectedDay]}
-              latitude={resort.latitude}
-              longitude={resort.longitude}
-              selectedHourIndex={selectedHourIndex}
-              onHourIndexChange={setSelectedHourIndex}
-            />
-
             {/* Snow Accumulation Display */}
             {weatherData.hourly && (
               <SnowAccumulationDisplay
                 hourlyData={weatherData.hourly[selectedElevation]}
                 targetDate={forecast[selectedElevation][selectedDay]?.date}
-                latitude={resort.latitude}
-                longitude={resort.longitude}
-                selectedHourIndex={selectedHourIndex}
-                onHourIndexChange={setSelectedHourIndex}
               />
             )}
 
