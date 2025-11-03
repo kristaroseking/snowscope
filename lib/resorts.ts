@@ -33,6 +33,7 @@ export const RESORTS: Resort[] = [
     ],
     liftOpeningTime: "8:00 AM",
     parkingInstructions: "Main parking lots are located at the base of Mount Mansfield. Arrive early on weekends and holidays as parking fills quickly. Overflow parking is available with shuttle service. Consider using the Mountain Road Park & Ride with free shuttle service during peak season.",
+    parkingCost: "paid",
   },
   {
     id: "mad-river-glen",

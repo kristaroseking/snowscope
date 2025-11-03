@@ -33,6 +33,7 @@ export interface Resort {
   };
   liftOpeningTime?: string; // Format: "HH:MM AM/PM" (e.g., "8:30 AM")
   parkingInstructions?: string; // Parking information and instructions
+  parkingCost?: "free" | "paid"; // Whether parking is free or paid
 }
 
 // Weather data types

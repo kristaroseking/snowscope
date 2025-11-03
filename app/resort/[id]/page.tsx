@@ -1121,7 +1121,18 @@ export default function ResortPage() {
                         </svg>
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-white mb-2">Parking</h3>
+                        <div className="flex items-center gap-3 mb-3">
+                          <h3 className="text-lg font-semibold text-white">Parking</h3>
+                          {resort.parkingCost && (
+                            <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                              resort.parkingCost === "free"
+                                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                                : "bg-orange-500/20 text-orange-300 border border-orange-500/30"
+                            }`}>
+                              {resort.parkingCost === "free" ? "FREE" : "PAID"}
+                            </span>
+                          )}
+                        </div>
                         <p className="text-sm text-slate-300 leading-relaxed">{resort.parkingInstructions}</p>
                       </div>
                     </div>
