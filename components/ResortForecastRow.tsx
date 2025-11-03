@@ -125,14 +125,14 @@ export default function ResortForecastRow({ weatherData }: ResortForecastRowProp
   return (
     <Link
       href={`/resort/${resort.id}`}
-      className="block bg-slate-800 rounded-card shadow-lg border border-slate-700 p-6 hover:bg-slate-750 hover:shadow-xl transition-all"
+      className="block bg-slate-800 rounded-card shadow-lg border border-slate-700 p-4 sm:p-6 hover:bg-slate-750 hover:shadow-xl transition-all"
     >
-      <div className="mb-4">
-        <h3 className="text-xl font-semibold text-white">{resort.name}</h3>
-        <p className="text-sm text-slate-400">{resort.state}, {resort.country}</p>
+      <div className="mb-4 sm:mb-6">
+        <h3 className="text-lg sm:text-xl font-semibold text-white mb-1">{resort.name}</h3>
+        <p className="text-xs sm:text-sm text-slate-400">{resort.state}, {resort.country}</p>
       </div>
 
-      <div className="grid grid-cols-5 sm:grid-cols-7 lg:grid-cols-10 gap-2">
+      <div className="grid grid-cols-5 sm:grid-cols-7 lg:grid-cols-10 gap-3 sm:gap-2">
         {forecastDays.map((day, index) => {
           const date = new Date(day.date);
           const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
@@ -140,21 +140,21 @@ export default function ResortForecastRow({ weatherData }: ResortForecastRowProp
           return (
             <div
               key={index}
-              className="flex flex-col items-center text-center border border-slate-600 rounded-lg p-2 hover:bg-slate-700 transition-colors bg-slate-750"
+              className="flex flex-col items-center text-center border border-slate-600 rounded-lg p-3 sm:p-2 hover:bg-slate-700 transition-colors bg-slate-750"
             >
-              <div className="text-xs font-medium text-slate-300 mb-2 flex items-center gap-1">
+              <div className="text-xs font-medium text-slate-300 mb-2 flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1">
                 <span>{dayName}</span>
-                <span className="text-slate-400 font-normal">{date.getMonth() + 1}/{date.getDate()}</span>
+                <span className="text-slate-400 font-normal text-[10px] sm:text-xs">{date.getMonth() + 1}/{date.getDate()}</span>
               </div>
-              <div className="text-xl font-bold mb-1 tabular-nums text-teal-light">
+              <div className="text-xl sm:text-xl font-bold mb-2 sm:mb-1 tabular-nums text-teal-light">
                 {getSnowfallRange(day.snowAccumulation)}
               </div>
-              <div className="flex items-center justify-center gap-2 text-xs mb-1 tabular-nums">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-xs mb-2 sm:mb-1 tabular-nums">
                 <span className="text-slate-300">{Math.round((day.tempHigh + day.tempLow) / 2)}°</span>
-                <span className="text-slate-400">{day.windSpeed} mph</span>
+                <span className="text-slate-400 text-[10px] sm:text-xs">{day.windSpeed} mph</span>
               </div>
               <div
-                className="text-2xl mb-2 cursor-pointer relative group"
+                className="text-2xl mb-3 sm:mb-2 cursor-pointer relative group"
               >
                 {day.weatherDescription}
                 {/* Custom tooltip */}
@@ -167,16 +167,16 @@ export default function ResortForecastRow({ weatherData }: ResortForecastRowProp
                 {loading || !allDayScores[index] ? (
                   // Loading state: show grey bars
                   <>
-                    <div className="flex-1 h-1.5 rounded-full bg-slate-600 animate-pulse" title="Morning" />
-                    <div className="flex-1 h-1.5 rounded-full bg-slate-600 animate-pulse" title="Afternoon" />
-                    <div className="flex-1 h-1.5 rounded-full bg-slate-600 animate-pulse" title="Evening" />
+                    <div className="flex-1 h-2 sm:h-1.5 rounded-full bg-slate-600 animate-pulse" title="Morning" />
+                    <div className="flex-1 h-2 sm:h-1.5 rounded-full bg-slate-600 animate-pulse" title="Afternoon" />
+                    <div className="flex-1 h-2 sm:h-1.5 rounded-full bg-slate-600 animate-pulse" title="Evening" />
                   </>
                 ) : (
                   // Show actual scores for this day
                   allDayScores[index].map((period, periodIndex) => (
                     <div
                       key={periodIndex}
-                      className={`flex-1 h-1.5 rounded-full ${getScoreColor(period.score, period.rating)}`}
+                      className={`flex-1 h-2 sm:h-1.5 rounded-full ${getScoreColor(period.score, period.rating)}`}
                       title={`${["Morning", "Afternoon", "Evening"][periodIndex]}: ${period.rating === "GO_SURFING" ? "Go Surfing" : period.rating}`}
                     />
                   ))
