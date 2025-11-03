@@ -177,68 +177,19 @@ export default function Home() {
               <>
                 {/* Filters Section */}
                 <div className="mb-8">
-                  <div className="flex items-start justify-between gap-4 mb-6">
-                    <div className="flex-1">
-                      {/* Geographic Region Section */}
-                      <div className="mb-6">
-                        <h3 className="text-xs text-slate-500 uppercase tracking-wide mb-3">
-                          Geographic Region
-                        </h3>
-                        <div className="flex gap-3 flex-wrap">
-                          {regions.map((region) => (
-                            <button
-                              key={region}
-                              onClick={() => setSelectedRegion(region)}
-                              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                                selectedRegion === region
-                                  ? "bg-teal text-white shadow-lg"
-                                  : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600"
-                              }`}
-                            >
-                              {region}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
+                  {/* Search Box - Full width on mobile, positioned at top */}
+                  <div className="mb-4">
+                    <input
+                      type="text"
+                      placeholder="Search resorts..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal focus:border-transparent"
+                    />
+                  </div>
 
-                      {/* Mountain Daddy Section */}
-                      <div>
-                        <h3 className="text-xs text-slate-500 uppercase tracking-wide mb-3">
-                          Mountain Daddy
-                        </h3>
-                        <div className="flex gap-3 flex-wrap">
-                          {(["All", "Epic", "Ikon", "Indy", "Independent"] as const).map((pass) => (
-                            <button
-                              key={pass}
-                              onClick={() => setSelectedPass(pass)}
-                              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                                selectedPass === pass
-                                  ? "bg-purple text-white shadow-lg"
-                                  : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600"
-                              }`}
-                            >
-                              {pass}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Search Box */}
-                    <div className="flex flex-col items-end gap-4">
-                      <div className="w-80">
-                        <input
-                          type="text"
-                          placeholder="Search resorts..."
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal focus:border-transparent"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Most Snow Banner - Next to filters */}
-                    {(() => {
+                  {/* Most Snow Banner - Below search on mobile */}
+                  {(() => {
                     const filteredData = selectedRegion === "All"
                       ? weatherData
                       : weatherData.filter((data) => data.resort.region === selectedRegion);
@@ -261,7 +212,7 @@ export default function Home() {
                       return (
                         <a
                           href={`/resort/${topResort.resort.id}`}
-                          className="flex items-center gap-2 px-3 py-2 bg-teal/10 hover:bg-teal/20 border border-teal/30 rounded-lg transition-all"
+                          className="flex items-center gap-2 px-3 py-2 bg-teal/10 hover:bg-teal/20 border border-teal/30 rounded-lg transition-all mb-4"
                         >
                           <span className="text-lg">⭐</span>
                           <div className="text-left">
@@ -274,7 +225,94 @@ export default function Home() {
                       );
                     }
                     return null;
-                    })()}
+                  })()}
+
+                  {/* Mobile: Compact dropdown filters */}
+                  <div className="lg:hidden space-y-3 mb-6">
+                    <div>
+                      <label className="block text-xs text-slate-500 uppercase tracking-wide mb-2">
+                        Geographic Region
+                      </label>
+                      <select
+                        value={selectedRegion}
+                        onChange={(e) => setSelectedRegion(e.target.value as Region | "All")}
+                        className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal focus:border-transparent"
+                      >
+                        {regions.map((region) => (
+                          <option key={region} value={region}>
+                            {region}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs text-slate-500 uppercase tracking-wide mb-2">
+                        Mountain Daddy
+                      </label>
+                      <select
+                        value={selectedPass}
+                        onChange={(e) => setSelectedPass(e.target.value as "All" | "Epic" | "Ikon" | "Indy" | "Independent")}
+                        className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent"
+                      >
+                        {(["All", "Epic", "Ikon", "Indy", "Independent"] as const).map((pass) => (
+                          <option key={pass} value={pass}>
+                            {pass}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Desktop: Button filters (hidden on mobile) */}
+                  <div className="hidden lg:block">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        {/* Geographic Region Section */}
+                        <div className="mb-6">
+                          <h3 className="text-xs text-slate-500 uppercase tracking-wide mb-3">
+                            Geographic Region
+                          </h3>
+                          <div className="flex gap-3 flex-wrap">
+                            {regions.map((region) => (
+                              <button
+                                key={region}
+                                onClick={() => setSelectedRegion(region)}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                                  selectedRegion === region
+                                    ? "bg-teal text-white shadow-lg"
+                                    : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600"
+                                }`}
+                              >
+                                {region}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Mountain Daddy Section */}
+                        <div>
+                          <h3 className="text-xs text-slate-500 uppercase tracking-wide mb-3">
+                            Mountain Daddy
+                          </h3>
+                          <div className="flex gap-3 flex-wrap">
+                            {(["All", "Epic", "Ikon", "Indy", "Independent"] as const).map((pass) => (
+                              <button
+                                key={pass}
+                                onClick={() => setSelectedPass(pass)}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                                  selectedPass === pass
+                                    ? "bg-purple text-white shadow-lg"
+                                    : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600"
+                                }`}
+                              >
+                                {pass}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
