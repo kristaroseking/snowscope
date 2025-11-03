@@ -56,6 +56,9 @@ export const RESORTS: Resort[] = [
       typicalClosing: "04-06",
     },
     blogUrl: "http://madriverglenweather.blogspot.com/",
+    liftOpeningTime: "9:00 AM",
+    parkingInstructions: "Free parking available in gravel lot at the base. Arrive early on weekends and holidays as spaces fill quickly. Known for its single-chair lift and co-op ownership model.",
+    parkingCost: "free",
   },
   {
     id: "jay-peak",
@@ -77,6 +80,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "11-28",
       typicalClosing: "04-27",
     },
+    liftOpeningTime: "9:00 AM",
+    parkingInstructions: "Abundant free parking available at the base. Multiple parking lots provide easy access to the tram and lifts. Jay Peak is known for receiving the most natural snowfall in the East.",
+    parkingCost: "free",
   },
   {
     id: "sugarbush",
@@ -98,6 +104,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "11-22",
       typicalClosing: "04-20",
     },
+    liftOpeningTime: "8:00 AM",
+    parkingInstructions: "Free standard parking available at both Lincoln Peak and Mt. Ellen base areas. Limited valet parking available on weekends and holidays. Free GMT Bus provides transportation between mountains and throughout Mad River Valley. Green Mountain Express Quad at Mt. Ellen opens at 8 AM, while Lincoln Peak lifts open at 9 AM midweek.",
+    parkingCost: "free",
   },
   {
     id: "magic-mountain",
@@ -119,6 +128,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "12-20",
       typicalClosing: "04-06",
     },
+    liftOpeningTime: "8:30 AM",
+    parkingInstructions: "100% free parking in Lots A and B at the base area. Open Thursday through Sunday and all days during holiday season. Known for authentic Vermont skiing experience and community-owned operation.",
+    parkingCost: "free",
   },
   {
     id: "killington",
@@ -140,6 +152,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "10-20",
       typicalClosing: "05-25",
     },
+    liftOpeningTime: "8:00 AM",
+    parkingInstructions: "Sufficient free parking available at all base stations including K-1, Snowshed, Ramshead, and Bear Mountain. Preferred parking at K-1 and valet service at Snowshed available for a fee. Killington offers the longest ski season in the East.",
+    parkingCost: "free",
   },
   {
     id: "sunday-river",
@@ -161,6 +176,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "11-13",
       typicalClosing: "04-27",
     },
+    liftOpeningTime: "8:00 AM",
+    parkingInstructions: "Sufficient free parking available at all base stations. Eight different peaks provide multiple parking areas for easy access. Note: lift closing times vary from 3:15-3:45 PM from late October to mid-January due to sunset.",
+    parkingCost: "free",
   },
   {
     id: "sugarloaf",
@@ -182,6 +200,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "11-29",
       typicalClosing: "05-04",
     },
+    liftOpeningTime: "8:30 AM",
+    parkingInstructions: "Free parking and shuttle services available. Hassle-free drop-offs with two dedicated lanes in the hotel lot. Overnight camping and EV charging stations available. Offers the only lift-serviced above-treeline skiing in the East.",
+    parkingCost: "free",
   },
   {
     id: "mammoth",
@@ -203,6 +224,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "11-14",
       typicalClosing: "05-26",
     },
+    liftOpeningTime: "8:30 AM",
+    parkingInstructions: "Free parking at all Mammoth Mountain lodges, with lots opening at 6:00 AM. Preferred parking available on first-come, first-served basis. Overnight parking prohibited during winter season. Parking may be limited on weekends and holidays.",
+    parkingCost: "free",
   },
   {
     id: "powder-mountain",
@@ -224,6 +248,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "12-12",
       typicalClosing: "04-13",
     },
+    liftOpeningTime: "9:00 AM",
+    parkingInstructions: "Free parking available at Timberline, Hidden Lake, and Sundown base areas without reservation on weekdays. Weekend parking ($12) implemented for 2025-26 season. Boasts the most skiable acres in North America with minimal crowds.",
+    parkingCost: "paid_weekends",
   },
   {
     id: "taos",
@@ -245,6 +272,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "11-27",
       typicalClosing: "04-06",
     },
+    liftOpeningTime: "9:00 AM",
+    parkingInstructions: "Plenty of free parking available at the base. Operating hours 9 AM - 4 PM. Celebrating 70th anniversary with special $70 lift tickets through December 2025. Known for steep terrain and genuine New Mexico hospitality.",
+    parkingCost: "free",
   },
   {
     id: "telluride",
@@ -266,6 +296,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "11-27",
       typicalClosing: "04-05",
     },
+    liftOpeningTime: "9:00 AM",
+    parkingInstructions: "Free parking available at Carhenge Lot at the base of Lift 7 in Town of Telluride. Paid parking options available in Mountain Village at Gondola Parking Garage, Meadows Lot, and Heritage Parking Garage. Free gondola connects town to mountain village.",
+    parkingCost: "free",
   },
   {
     id: "arapahoe-basin",
@@ -287,6 +320,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "10-26",
       typicalClosing: "06-01",
     },
+    liftOpeningTime: "8:30 AM",
+    parkingInstructions: "Parking reservations required on weekends (Saturdays and Sundays) from January 3 to May 3 between 6 AM and 1 PM. General parking $20 per reservation, free for carpools of 4+. Season parking pass available for $229. ADA accessible parking free but requires reservation. Lifts operate 8:30 AM - 4 PM.",
+    parkingCost: "paid_weekends",
   },
   {
     id: "kicking-horse",
@@ -307,6 +343,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "12-05",
       typicalClosing: "04-20",
     },
+    liftOpeningTime: "9:00 AM",
+    parkingInstructions: "Plenty of free parking available at the base station with both paved and gravel lots. Located near Golden, BC, known for its legendary powder and steep terrain accessed by North America's highest lift-served vertical.",
+    parkingCost: "free",
   },
   {
     id: "fernie",
@@ -327,6 +366,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "12-05",
       typicalClosing: "04-20",
     },
+    liftOpeningTime: "9:00 AM",
+    parkingInstructions: "Free parking available with paved and gravel lots at the base. Season pass holders can purchase priority parking passes at 20% discount to park closer to lifts. Operating hours 9 AM - 4 PM MST. Famous for champagne powder and legendary snow ghosts.",
+    parkingCost: "free",
   },
   {
     id: "tremblant",
@@ -348,6 +390,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "11-27",
       typicalClosing: "04-20",
     },
+    liftOpeningTime: "8:30 AM",
+    parkingInstructions: "Free parking available in outer lots and on north side of resort. Paid parking available at village hotels and closer lots. European-style pedestrian village at the base provides ski-in/ski-out access. Quebec's premier four-season resort.",
+    parkingCost: "free",
   },
   {
     id: "revelstoke",
@@ -369,6 +414,9 @@ export const RESORTS: Resort[] = [
       typicalOpening: "11-29",
       typicalClosing: "04-20",
     },
+    liftOpeningTime: "8:30 AM",
+    parkingInstructions: "Plenty of free parking at the base station. Resort located about 6 km from the town of Revelstoke. Offers North America's longest lift-served vertical at 5,620 feet and legendary tree skiing in the Selkirk Mountains.",
+    parkingCost: "free",
   },
   {
     id: "banff-sunshine",
