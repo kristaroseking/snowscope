@@ -150,19 +150,52 @@ export default function CombinedWindSnowDisplay({ hourlyData, targetDate, latitu
 
   return (
     <div className="bg-slate-800 rounded-lg shadow-sm p-4 sm:p-6 border border-slate-700 mb-6">
-      {/* Top row: Wind, Snow & Temp info with Arrow on right */}
-      <div className="flex items-start justify-between mb-6 sm:mb-8">
-        {/* Left side - Wind, Snow & Temp info side by side */}
+      {/* Top row: Wind, Snow & Temp info */}
+      <div className="mb-6 sm:mb-8">
         <div className="flex flex-row gap-4 sm:gap-6">
-          {/* Wind info */}
-          <div className="flex flex-col">
-            <div className="text-base sm:text-lg font-semibold text-white mb-2">Wind</div>
-            <div className="space-y-1">
-              <div className="text-2xl sm:text-3xl font-bold text-blue-400 tabular-nums">
-                {selectedData.windSpeed}mph {get8DirectionLabel(selectedData.windDirection)}
+          {/* Wind info with arrow */}
+          <div className="flex items-start gap-3">
+            <div className="flex flex-col">
+              <div className="text-base sm:text-lg font-semibold text-white mb-2">Wind</div>
+              <div className="space-y-1">
+                <div className="text-2xl sm:text-3xl font-bold text-blue-400 tabular-nums">
+                  {selectedData.windSpeed}mph {get8DirectionLabel(selectedData.windDirection)}
+                </div>
+                <div className="text-sm sm:text-base text-slate-300 tabular-nums">
+                  {selectedData.windGust}mph gust
+                </div>
               </div>
-              <div className="text-sm sm:text-base text-slate-300 tabular-nums">
-                {selectedData.windGust}mph gust
+            </div>
+
+            {/* Wind Arrow integrated with wind info */}
+            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-slate-900 flex items-center justify-center flex-shrink-0 mt-6">
+              <div
+                className="relative"
+                style={{
+                  transform: `rotate(${selectedData.windDirection}deg)`,
+                  transition: 'transform 0.3s ease-in-out'
+                }}
+              >
+                <svg width="40" height="40" viewBox="0 0 100 100" className="sm:w-[50px] sm:h-[50px]">
+                  <line
+                    x1="50"
+                    y1="75"
+                    x2="50"
+                    y2="25"
+                    stroke="#20B2AA"
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                  />
+                  <polygon
+                    points="50,18 58,30 42,30"
+                    fill="#20B2AA"
+                  />
+                  <polygon
+                    points="42,70 50,75 58,70 50,65"
+                    fill="#20B2AA"
+                    opacity="0.7"
+                  />
+                </svg>
               </div>
             </div>
           </div>
@@ -188,38 +221,6 @@ export default function CombinedWindSnowDisplay({ hourlyData, targetDate, latitu
                 {selectedData.temp}°F
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Right side - Wind Arrow Display */}
-        <div className="relative w-24 h-24 sm:w-40 sm:h-40 rounded-lg bg-slate-900 flex items-center justify-center flex-shrink-0">
-          <div
-            className="relative"
-            style={{
-              transform: `rotate(${selectedData.windDirection}deg)`,
-              transition: 'transform 0.3s ease-in-out'
-            }}
-          >
-            <svg width="60" height="60" viewBox="0 0 100 100" className="sm:w-[100px] sm:h-[100px]">
-              <line
-                x1="50"
-                y1="75"
-                x2="50"
-                y2="25"
-                stroke="#20B2AA"
-                strokeWidth="5"
-                strokeLinecap="round"
-              />
-              <polygon
-                points="50,18 58,30 42,30"
-                fill="#20B2AA"
-              />
-              <polygon
-                points="42,70 50,75 58,70 50,65"
-                fill="#20B2AA"
-                opacity="0.7"
-              />
-            </svg>
           </div>
         </div>
       </div>
