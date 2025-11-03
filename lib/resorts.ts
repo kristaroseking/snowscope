@@ -250,7 +250,7 @@ export const RESORTS: Resort[] = [
     },
     liftOpeningTime: "9:00 AM",
     parkingInstructions: "Free parking available at Timberline, Hidden Lake, and Sundown base areas without reservation on weekdays. Weekend parking ($12) implemented for 2025-26 season. Boasts the most skiable acres in North America with minimal crowds.",
-    parkingCost: "paid_weekends",
+    parkingCost: "paid",
   },
   {
     id: "taos",
@@ -322,7 +322,7 @@ export const RESORTS: Resort[] = [
     },
     liftOpeningTime: "8:30 AM",
     parkingInstructions: "Parking reservations required on weekends (Saturdays and Sundays) from January 3 to May 3 between 6 AM and 1 PM. General parking $20 per reservation, free for carpools of 4+. Season parking pass available for $229. ADA accessible parking free but requires reservation. Lifts operate 8:30 AM - 4 PM.",
-    parkingCost: "paid_weekends",
+    parkingCost: "paid",
   },
   {
     id: "kicking-horse",
