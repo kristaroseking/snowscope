@@ -222,12 +222,18 @@ export default function SnowAccumulationDisplay({ hourlyData, targetDate, latitu
               return (
                 <div
                   key={index}
-                  className="flex-1 bg-teal-light rounded-t"
+                  className="flex-1 bg-teal-light rounded-t relative group"
                   style={{
                     height: `${heightPx}px`,
                     opacity: 0.5
                   }}
-                />
+                  title={`${snowData.snowAccumulation.toFixed(1)}"`}
+                >
+                  {/* Tooltip on hover */}
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-slate-900 text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 border border-slate-600">
+                    {snowData.snowAccumulation.toFixed(1)}"
+                  </div>
+                </div>
               );
             })}
           </div>
