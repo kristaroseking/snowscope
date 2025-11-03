@@ -341,6 +341,27 @@ export const RESORTS: Resort[] = [
     },
   },
   {
+    id: "banff-sunshine",
+    name: "Banff Sunshine Village",
+    state: "Alberta",
+    country: "Canada",
+    region: "Canada",
+    latitude: 51.1147,
+    longitude: -115.7630,
+    elevations: {
+      base: 5440,
+      mid: 7000,
+      summit: 8954,
+    },
+    passes: ["Ikon"],
+    season: {
+      openingDay: "2024-11-09",
+      closingDay: "2025-05-19",
+      typicalOpening: "11-10",
+      typicalClosing: "05-20",
+    },
+  },
+  {
     id: "niseko",
     name: "Niseko United",
     state: "Hokkaido",
