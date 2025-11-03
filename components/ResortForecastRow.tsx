@@ -162,7 +162,7 @@ export default function ResortForecastRow({ weatherData }: ResortForecastRowProp
               </div>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-xs mb-2 sm:mb-1 tabular-nums">
                 <span className="text-slate-300">{Math.round((day.tempHigh + day.tempLow) / 2)}°</span>
-                <span className="text-slate-400 text-[10px] sm:text-xs">{day.windSpeed} mph</span>
+                <span className="text-slate-400 text-[10px] sm:text-xs whitespace-nowrap">{day.windSpeed} mph</span>
               </div>
               <div
                 className="text-2xl mb-3 sm:mb-2 cursor-pointer relative group"
