@@ -174,7 +174,7 @@ export default function ResortForecastRow({ weatherData }: ResortForecastRowProp
                 </div>
               </div>
               {/* Three horizontal condition bars for all days */}
-              <div className="w-full flex gap-0.5 mt-auto pt-2 border-t border-slate-600">
+              <div className="w-full flex gap-0.5 mt-auto pt-2">
                 {!resortOpen ? (
                   // Resort closed: show grey bars
                   <>

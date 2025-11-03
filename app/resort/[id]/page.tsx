@@ -645,7 +645,7 @@ export default function ResortPage() {
                         </div>
                       </div>
                       {/* Three horizontal condition bars */}
-                      <div className="w-full flex gap-0.5 mt-auto pt-2 sm:pt-3 border-t border-slate-600">
+                      <div className="w-full flex gap-0.5 mt-auto pt-2 sm:pt-3">
                         {!isResortOpen() ? (
                           // Resort closed: show grey bars
                           <>
