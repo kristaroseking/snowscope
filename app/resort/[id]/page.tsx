@@ -10,7 +10,6 @@ import LocalSpotlight from "@/components/LocalSpotlight";
 import LoadingState from "@/components/LoadingState";
 import ErrorState from "@/components/ErrorState";
 import TodayConditionSummary from "@/components/TodayConditionSummary";
-import HourlyForecast from "@/components/HourlyForecast";
 import HourlyRatingBar from "@/components/HourlyRatingBar";
 import CombinedWindSnowDisplay, { SunTimesCard } from "@/components/CombinedWindSnowDisplay";
 import { getSunriseSunset } from "@/lib/utils/sunriseSunset";
@@ -710,16 +709,6 @@ export default function ResortPage() {
                   resort.longitude,
                   forecast[selectedElevation][selectedDay]?.date ? new Date(forecast[selectedElevation][selectedDay].date) : new Date()
                 )}
-              />
-            )}
-
-            {/* Selected Day's Hourly Forecast */}
-            {weatherData.hourly && (
-              <HourlyForecast
-                hourlyData={weatherData.hourly[selectedElevation]}
-                elevation={selectedElevation}
-                selectedDayIndex={selectedDay}
-                targetDate={forecast[selectedElevation][selectedDay]?.date}
               />
             )}
 
