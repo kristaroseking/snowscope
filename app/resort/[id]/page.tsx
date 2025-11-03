@@ -13,11 +13,12 @@ import TodayConditionSummary from "@/components/TodayConditionSummary";
 import HourlyRatingBar from "@/components/HourlyRatingBar";
 import CombinedWindSnowDisplay, { SunTimesCard } from "@/components/CombinedWindSnowDisplay";
 import { getSunriseSunset } from "@/lib/utils/sunriseSunset";
-import { ResortWeather, LiveLiftStatus, LiveTrailStatus } from "@/types";
+import { ResortWeather, LiveLiftStatus, LiveTrailStatus, ResortStatus } from "@/types";
 import { resortHistories } from "@/lib/resortHistories";
 import { getWeeklySpotlight } from "@/lib/localSpotlights";
 import { getResortSeasonStatus } from "@/lib/resortSeason";
 import { LiftDetails } from "@/lib/liftDatabase";
+import LiftTrailStatusNew from "@/components/LiftTrailStatusNew";
 
 export default function ResortPage() {
   const params = useParams();
@@ -33,6 +34,8 @@ export default function ResortPage() {
   const [liveLiftsError, setLiveLiftsError] = useState<string | null>(null);
   const [liveTrails, setLiveTrails] = useState<LiveTrailStatus[] | null>(null);
   const [trailFilter, setTrailFilter] = useState<"all" | "newly-opened" | "newly-closed">("all");
+  const [resortStatus, setResortStatus] = useState<ResortStatus | null>(null);
+  const [resortStatusLoading, setResortStatusLoading] = useState(false);
   const [showGYMTLOverlay, setShowGYMTLOverlay] = useState(false);
   const [showCloseButton, setShowCloseButton] = useState(false);
   const [visibleWordIndex, setVisibleWordIndex] = useState(0);
@@ -64,6 +67,29 @@ export default function ResortPage() {
 
     fetchWeather();
   }, [resortId]);
+
+  // Fetch resort status for Banff Sunshine (new design)
+  useEffect(() => {
+    if (selectedTab === "resort-info" && resortId === "banff-sunshine" && !resortStatus && !resortStatusLoading) {
+      const fetchResortStatus = async () => {
+        setResortStatusLoading(true);
+        try {
+          const response = await fetch(`/api/resort-status/${resortId}`);
+          const result = await response.json();
+
+          if (result.success) {
+            setResortStatus(result.data);
+          }
+        } catch (err) {
+          console.error("Failed to fetch resort status:", err);
+        } finally {
+          setResortStatusLoading(false);
+        }
+      };
+
+      fetchResortStatus();
+    }
+  }, [selectedTab, resortId, resortStatus, resortStatusLoading]);
 
   // Fetch live lift status when lifts tab is selected
   // Supported resorts: stowe, mad-river-glen, jay-peak, sugarbush, killington, sunday-river, mammoth
@@ -718,6 +744,20 @@ export default function ResortPage() {
         {/* Lift and Trail Status Tab */}
         {selectedTab === "resort-info" && (
           <div className="mb-12">
+            {/* New Design for Banff Sunshine */}
+            {resortId === "banff-sunshine" && resortStatus && (
+              <LiftTrailStatusNew status={resortStatus} />
+            )}
+
+            {resortId === "banff-sunshine" && resortStatusLoading && (
+              <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
+                <p className="text-slate-300">Loading resort status...</p>
+              </div>
+            )}
+
+            {/* Old design for other resorts */}
+            {resortId !== "banff-sunshine" && (
+              <>
             {/* Resort Status Banner */}
             {(() => {
               const seasonStatus = getResortSeasonStatus(resort);
@@ -1072,6 +1112,8 @@ export default function ResortPage() {
                   </div>
                 </div>
               </div>
+            )}
+              </>
             )}
 
           </div>

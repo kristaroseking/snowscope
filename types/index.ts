@@ -167,3 +167,25 @@ export interface LiftStatusResponse {
   };
   error?: string;
 }
+
+// Resort status with snow statistics
+export interface ResortStatus {
+  resortId: string;
+  lifts: LiveLiftStatus[];
+  trails: LiveTrailStatus[];
+  stats: {
+    trailsOpen: number;
+    trailsTotal: number;
+    liftsOpen: number;
+    liftsTotal: number;
+    baseDepth: number; // inches
+    seasonTotal: number; // inches
+    lastUpdated: string; // ISO timestamp
+  };
+}
+
+export interface ResortStatusResponse {
+  success: boolean;
+  data?: ResortStatus;
+  error?: string;
+}
