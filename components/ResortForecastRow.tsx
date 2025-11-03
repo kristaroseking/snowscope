@@ -157,7 +157,7 @@ export default function ResortForecastRow({ weatherData }: ResortForecastRowProp
                 <span>{dayName}</span>
                 <span className="text-slate-400 font-normal text-[10px] sm:text-xs">{date.getMonth() + 1}/{date.getDate()}</span>
               </div>
-              <div className="text-xl sm:text-xl font-bold mb-2 sm:mb-1 tabular-nums text-teal-light">
+              <div className="text-lg sm:text-xl font-bold mb-2 sm:mb-1 tabular-nums text-teal-light whitespace-nowrap">
                 {getSnowfallRange(day.snowAccumulation)}
               </div>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-xs mb-2 sm:mb-1 tabular-nums">
