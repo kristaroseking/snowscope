@@ -355,10 +355,10 @@ export const RESORTS: Resort[] = [
     },
     passes: ["Ikon"],
     season: {
-      openingDay: "2024-11-09",
+      openingDay: "2024-11-08",
       closingDay: "2025-05-19",
-      typicalOpening: "11-10",
-      typicalClosing: "05-20",
+      typicalOpening: "11-08",
+      typicalClosing: "05-19",
     },
   },
   {
