@@ -247,6 +247,27 @@ export const RESORTS: Resort[] = [
     passes: ["Epic"],
   },
   {
+    id: "arapahoe-basin",
+    name: "Arapahoe Basin",
+    state: "Colorado",
+    country: "USA",
+    region: "Western USA",
+    latitude: 39.6425,
+    longitude: -105.8719,
+    elevations: {
+      base: 10780,
+      mid: 11800,
+      summit: 13050,
+    },
+    passes: ["Ikon"],
+    season: {
+      openingDay: "2024-10-13",
+      closingDay: "2025-06-01",
+      typicalOpening: "10-15",
+      typicalClosing: "06-01",
+    },
+  },
+  {
     id: "kicking-horse",
     name: "Kicking Horse Mountain Resort",
     state: "British Columbia",
