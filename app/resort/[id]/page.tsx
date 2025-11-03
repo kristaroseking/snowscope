@@ -1090,6 +1090,46 @@ export default function ResortPage() {
         {/* Resort Information Tab */}
         {selectedTab === "maps-and-lifts" && (
           <div className="mb-12">
+            {/* Lift Times and Parking Section */}
+            {(resort.liftOpeningTime || resort.parkingInstructions) && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                {/* Lift Opening Time */}
+                {resort.liftOpeningTime && (
+                  <div className="bg-slate-800 rounded-card shadow-sm border border-slate-700 p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0">
+                        <svg className="w-8 h-8 text-teal-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold text-white mb-2">First Lift</h3>
+                        <p className="text-2xl font-bold text-teal-light mb-1">{resort.liftOpeningTime}</p>
+                        <p className="text-sm text-slate-400">Lifts typically open daily</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Parking Instructions */}
+                {resort.parkingInstructions && (
+                  <div className="bg-slate-800 rounded-card shadow-sm border border-slate-700 p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0">
+                        <svg className="w-8 h-8 text-teal-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold text-white mb-2">Parking</h3>
+                        <p className="text-sm text-slate-300 leading-relaxed">{resort.parkingInstructions}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Trail Map Section */}
             {(() => {
               const { getTrailMapData } = require("@/lib/trailMapUrls");

@@ -31,6 +31,8 @@ export interface Resort {
     typicalOpening: string; // Format: "MM-DD" (e.g., "11-15" for mid-November)
     typicalClosing: string; // Format: "MM-DD"
   };
+  liftOpeningTime?: string; // Format: "HH:MM AM/PM" (e.g., "8:30 AM")
+  parkingInstructions?: string; // Parking information and instructions
 }
 
 // Weather data types

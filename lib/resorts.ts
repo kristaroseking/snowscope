@@ -31,6 +31,8 @@ export const RESORTS: Resort[] = [
       { name: "Lookout Double", type: "Double", bottomElevation: 2100, topElevation: 2600, windExposure: "Moderate" },
       { name: "Perry Merrill Double", type: "Double", bottomElevation: 1600, topElevation: 2100, windExposure: "Low" },
     ],
+    liftOpeningTime: "8:00 AM",
+    parkingInstructions: "Main parking lots are located at the base of Mount Mansfield. Arrive early on weekends and holidays as parking fills quickly. Overflow parking is available with shuttle service. Consider using the Mountain Road Park & Ride with free shuttle service during peak season.",
   },
   {
     id: "mad-river-glen",
