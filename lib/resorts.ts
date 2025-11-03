@@ -390,6 +390,17 @@ export const RESORTS: Resort[] = [
       typicalOpening: "11-08",
       typicalClosing: "05-18",
     },
+    lifts: [
+      { name: "Sunshine Gondola", type: "Gondola", bottomElevation: 5440, topElevation: 7200, windExposure: "Low" },
+      { name: "Teepee Town LX", type: "High-Speed Quad", bottomElevation: 7090, topElevation: 8300, windExposure: "Moderate" },
+      { name: "Goat's Eye Express", type: "High-Speed Quad", bottomElevation: 7200, topElevation: 8900, windExposure: "High" },
+      { name: "Standish Chairlift", type: "High-Speed Quad", bottomElevation: 7090, topElevation: 8960, windExposure: "High" },
+      { name: "Angel Express", type: "High-Speed Quad", bottomElevation: 7090, topElevation: 8200, windExposure: "Moderate" },
+      { name: "Wolverine Express", type: "High-Speed Quad", bottomElevation: 7090, topElevation: 8100, windExposure: "Moderate" },
+    ],
+    liftOpeningTime: "8:00 AM",
+    parkingInstructions: "Free parking at the base area with easy access to the gondola terminal. Free shuttle buses available from the Town of Banff with pickup at several hotels and Brewster's Depot. Located 8km west of Banff.",
+    parkingCost: "free",
   },
   {
     id: "niseko",
