@@ -272,35 +272,39 @@ export default function CombinedWindSnowDisplay({ hourlyData, targetDate, latitu
                 : 0;
 
               return (
-                <div key={index} className="flex-1 flex flex-col items-center justify-end gap-0.5" style={{ minWidth: `${100 / hourlyCombinedData.length}%` }}>
+                <div key={index} className="flex-1 flex flex-col items-center justify-end gap-0.5 relative group" style={{ minWidth: `${100 / hourlyCombinedData.length}%` }}>
+                  {/* Combined tooltip - shows both wind and snow */}
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-slate-900 text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 border border-slate-600">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-blue-400 rounded"></div>
+                        <span>{data.windSpeed}mph wind</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-teal-light rounded"></div>
+                        <span>{data.snowAccumulation.toFixed(1)}" snow</span>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Wind bar (top) */}
                   <div
-                    className="w-full bg-blue-400 rounded-t relative group"
+                    className="w-full bg-blue-400 rounded-t"
                     style={{
                       height: `${windHeightPx}px`,
                       opacity: 0.6
                     }}
-                    title={`${data.windSpeed}mph wind`}
-                  >
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-slate-900 text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 border border-slate-600">
-                      {data.windSpeed}mph
-                    </div>
-                  </div>
+                  />
 
                   {/* Snow bar (bottom) */}
                   {snowHeightPx > 0 && (
                     <div
-                      className="w-full bg-teal-light rounded-t relative group"
+                      className="w-full bg-teal-light rounded-t"
                       style={{
                         height: `${snowHeightPx}px`,
                         opacity: 0.6
                       }}
-                      title={`${data.snowAccumulation.toFixed(1)}" snow`}
-                    >
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-slate-900 text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 border border-slate-600">
-                        {data.snowAccumulation.toFixed(1)}"
-                      </div>
-                    </div>
+                    />
                   )}
                 </div>
               );
