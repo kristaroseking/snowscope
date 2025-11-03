@@ -16,6 +16,7 @@ interface CombinedWindSnowDisplayProps {
 interface HourCombinedData {
   hour: number;
   time: string;
+  temp: number;
   windSpeed: number;
   windGust: number;
   windDirection: number;
@@ -67,6 +68,7 @@ export default function CombinedWindSnowDisplay({ hourlyData, targetDate, latitu
         combinedData.push({
           hour: hourNum,
           time: hourTime.toLocaleTimeString("en-US", { hour: "numeric", hour12: true }),
+          temp: Math.round(matchingHour.temp),
           windSpeed: speed,
           windGust: Math.round(speed * 1.3),
           windDirection: matchingHour.windDirection || 0,
@@ -148,10 +150,10 @@ export default function CombinedWindSnowDisplay({ hourlyData, targetDate, latitu
 
   return (
     <div className="bg-slate-800 rounded-lg shadow-sm p-4 sm:p-6 border border-slate-700 mb-6">
-      {/* Top row: Wind & Snow info with Arrow on right */}
+      {/* Top row: Wind, Snow & Temp info with Arrow on right */}
       <div className="flex items-start justify-between mb-6 sm:mb-8">
-        {/* Left side - Wind & Snow info side by side */}
-        <div className="flex flex-row gap-6 sm:gap-8">
+        {/* Left side - Wind, Snow & Temp info side by side */}
+        <div className="flex flex-row gap-4 sm:gap-6">
           {/* Wind info */}
           <div className="flex flex-col">
             <div className="text-base sm:text-lg font-semibold text-white mb-2">Wind</div>
@@ -174,6 +176,16 @@ export default function CombinedWindSnowDisplay({ hourlyData, targetDate, latitu
               </div>
               <div className="text-sm sm:text-base text-slate-300 tabular-nums">
                 {totalSnow.toFixed(1)}" daily total
+              </div>
+            </div>
+          </div>
+
+          {/* Temperature info */}
+          <div className="flex flex-col">
+            <div className="text-base sm:text-lg font-semibold text-white mb-2">Temp</div>
+            <div className="space-y-1">
+              <div className="text-2xl sm:text-3xl font-bold text-orange-400 tabular-nums">
+                {selectedData.temp}°F
               </div>
             </div>
           </div>
@@ -273,9 +285,13 @@ export default function CombinedWindSnowDisplay({ hourlyData, targetDate, latitu
 
               return (
                 <div key={index} className="flex-1 flex flex-col items-center justify-end gap-0.5 relative group" style={{ minWidth: `${100 / hourlyCombinedData.length}%` }}>
-                  {/* Combined tooltip - shows both wind and snow */}
+                  {/* Combined tooltip - shows wind, snow, and temp */}
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-slate-900 text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 border border-slate-600">
                     <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-orange-400 rounded"></div>
+                        <span>{data.temp}°F</span>
+                      </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-blue-400 rounded"></div>
                         <span>{data.windSpeed}mph wind</span>
