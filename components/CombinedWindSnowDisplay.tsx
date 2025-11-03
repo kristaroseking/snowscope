@@ -150,8 +150,8 @@ export default function CombinedWindSnowDisplay({ hourlyData, targetDate, latitu
     <div className="bg-slate-800 rounded-lg shadow-sm p-4 sm:p-6 border border-slate-700 mb-6">
       {/* Top row: Wind & Snow info with Arrow on right */}
       <div className="flex items-start justify-between mb-6 sm:mb-8">
-        {/* Left side - Wind & Snow info */}
-        <div className="flex flex-col gap-4 sm:gap-6">
+        {/* Left side - Wind & Snow info side by side */}
+        <div className="flex flex-row gap-6 sm:gap-8">
           {/* Wind info */}
           <div className="flex flex-col">
             <div className="text-base sm:text-lg font-semibold text-white mb-2">Wind</div>
