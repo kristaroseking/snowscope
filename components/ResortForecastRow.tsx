@@ -18,6 +18,17 @@ export default function ResortForecastRow({ weatherData }: ResortForecastRowProp
   const [allDayScores, setAllDayScores] = useState<PeriodScore[][]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Check if resort is currently open based on season dates
+  const isResortOpen = () => {
+    if (!resort.season) return true; // If no season data, assume open
+    const today = new Date();
+    const openingDate = new Date(resort.season.openingDay);
+    const closingDate = new Date(resort.season.closingDay);
+    return today >= openingDate && today <= closingDate;
+  };
+
+  const resortOpen = isResortOpen();
+
   // Use mid-mountain forecast for display
   const forecastDays = forecast.mid;
 
@@ -164,8 +175,15 @@ export default function ResortForecastRow({ weatherData }: ResortForecastRowProp
               </div>
               {/* Three horizontal condition bars for all days */}
               <div className="w-full flex gap-0.5 mt-auto pt-2 border-t border-slate-600">
-                {loading || !allDayScores[index] ? (
-                  // Loading state: show grey bars
+                {!resortOpen ? (
+                  // Resort closed: show grey bars
+                  <>
+                    <div className="flex-1 h-2 sm:h-1.5 rounded-full bg-slate-600" title="Resort Closed" />
+                    <div className="flex-1 h-2 sm:h-1.5 rounded-full bg-slate-600" title="Resort Closed" />
+                    <div className="flex-1 h-2 sm:h-1.5 rounded-full bg-slate-600" title="Resort Closed" />
+                  </>
+                ) : loading || !allDayScores[index] ? (
+                  // Loading state: show grey bars with pulse
                   <>
                     <div className="flex-1 h-2 sm:h-1.5 rounded-full bg-slate-600 animate-pulse" title="Morning" />
                     <div className="flex-1 h-2 sm:h-1.5 rounded-full bg-slate-600 animate-pulse" title="Afternoon" />
