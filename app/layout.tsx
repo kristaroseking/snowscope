@@ -17,6 +17,7 @@ const courierPrime = Courier_Prime({
 export const metadata: Metadata = {
   title: "SLOPE - Mountain Weather Forecasts",
   description: "Retro mountain weather forecasts for skiers and snowboarders",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
 };
 
 export default function RootLayout({

@@ -110,12 +110,12 @@ export default function Home() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Tabs with Most Snow Banner */}
-        <div className="mb-8 border-b border-slate-700">
-          <div className="flex items-center justify-between">
-            <div className="flex gap-8">
+        <div className="mb-8 border-b border-slate-700 -mx-4 sm:mx-0">
+          <div className="overflow-x-auto scrollbar-hide px-4 sm:px-0">
+            <div className="flex gap-4 sm:gap-8 min-w-max sm:min-w-0">
               <button
                 onClick={() => setSelectedTab("resorts")}
-                className={`pb-4 px-2 text-lg font-semibold transition-all relative ${
+                className={`pb-4 px-2 text-base sm:text-lg font-semibold transition-all relative whitespace-nowrap ${
                   selectedTab === "resorts"
                     ? "text-white"
                     : "text-slate-400 hover:text-slate-300"
@@ -128,7 +128,7 @@ export default function Home() {
               </button>
               <button
                 onClick={() => setSelectedTab("backcountry")}
-                className={`pb-4 px-2 text-lg font-semibold transition-all relative ${
+                className={`pb-4 px-2 text-base sm:text-lg font-semibold transition-all relative whitespace-nowrap ${
                   selectedTab === "backcountry"
                     ? "text-white"
                     : "text-slate-400 hover:text-slate-300"
@@ -141,7 +141,7 @@ export default function Home() {
               </button>
               <button
                 onClick={() => setSelectedTab("trip-planning")}
-                className={`pb-4 px-2 text-lg font-semibold transition-all relative ${
+                className={`pb-4 px-2 text-base sm:text-lg font-semibold transition-all relative whitespace-nowrap ${
                   selectedTab === "trip-planning"
                     ? "text-white"
                     : "text-slate-400 hover:text-slate-300"
@@ -154,7 +154,7 @@ export default function Home() {
               </button>
               <button
                 onClick={() => setSelectedTab("map-view")}
-                className={`pb-4 px-2 text-lg font-semibold transition-all relative ${
+                className={`pb-4 px-2 text-base sm:text-lg font-semibold transition-all relative whitespace-nowrap ${
                   selectedTab === "map-view"
                     ? "text-white"
                     : "text-slate-400 hover:text-slate-300"

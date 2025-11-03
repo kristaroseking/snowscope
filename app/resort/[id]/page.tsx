@@ -279,7 +279,7 @@ export default function ResortPage() {
           >
             ← Back to all resorts
           </Link>
-          <h1 className="text-4xl font-bold text-white tracking-tight">{resort.name}</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">{resort.name}</h1>
           <p className="text-slate-300 mt-2 leading-relaxed">
             {resort.state}, {resort.country}
           </p>
@@ -289,10 +289,10 @@ export default function ResortPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Horizontal Tabs */}
         <div className="mb-8 border-b border-slate-700">
-          <div className="flex gap-8">
+          <div className="flex gap-4 sm:gap-8 overflow-x-auto scrollbar-hide">
             <button
               onClick={() => setSelectedTab("current")}
-              className={`pb-4 px-2 text-lg font-semibold transition-all relative ${
+              className={`pb-4 px-2 text-sm sm:text-lg font-semibold transition-all relative whitespace-nowrap ${
                 selectedTab === "current"
                   ? "text-white"
                   : "text-slate-400 hover:text-slate-300"
@@ -305,7 +305,7 @@ export default function ResortPage() {
             </button>
             <button
               onClick={() => setSelectedTab("resort-info")}
-              className={`pb-4 px-2 text-lg font-semibold transition-all relative ${
+              className={`pb-4 px-2 text-sm sm:text-lg font-semibold transition-all relative whitespace-nowrap ${
                 selectedTab === "resort-info"
                   ? "text-white"
                   : "text-slate-400 hover:text-slate-300"
@@ -318,7 +318,7 @@ export default function ResortPage() {
             </button>
             <button
               onClick={() => setSelectedTab("maps-and-lifts")}
-              className={`pb-4 px-2 text-lg font-semibold transition-all relative ${
+              className={`pb-4 px-2 text-sm sm:text-lg font-semibold transition-all relative whitespace-nowrap ${
                 selectedTab === "maps-and-lifts"
                   ? "text-white"
                   : "text-slate-400 hover:text-slate-300"
@@ -331,7 +331,7 @@ export default function ResortPage() {
             </button>
             <button
               onClick={() => setSelectedTab("local")}
-              className={`pb-4 px-2 text-lg font-semibold transition-all relative ${
+              className={`pb-4 px-2 text-sm sm:text-lg font-semibold transition-all relative whitespace-nowrap ${
                 selectedTab === "local"
                   ? "text-white"
                   : "text-slate-400 hover:text-slate-300"
@@ -468,8 +468,8 @@ export default function ResortPage() {
               </div>
 
               {/* Combined Summary Card - 2/3 width */}
-              <div className="lg:col-span-2 bg-slate-800 rounded-card shadow-sm p-6 border border-slate-700 h-full flex flex-col">
-                <h3 className="text-lg font-semibold text-white mb-4">
+              <div className="lg:col-span-2 bg-slate-800 rounded-card shadow-sm p-4 sm:p-6 border border-slate-700 h-full flex flex-col">
+                <h3 className="text-base sm:text-lg font-semibold text-white mb-4">
                   Conditions Summary
                 </h3>
                 <div className="text-slate-300 leading-relaxed mb-4">
@@ -606,10 +606,10 @@ export default function ResortPage() {
 
             {/* 10-Day Forecast Cards */}
             <div className="mb-6">
-              <h3 className="text-lg font-semibold text-white mb-4">
+              <h3 className="text-base sm:text-lg font-semibold text-white mb-4">
                 10-Day Forecast
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-2 sm:gap-3">
                 {forecast[selectedElevation].map((day, index) => {
                   const date = new Date(day.date);
                   const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
@@ -619,24 +619,24 @@ export default function ResortPage() {
                     <div
                       key={index}
                       onClick={() => setSelectedDay(index)}
-                      className={`flex flex-col items-center text-center border rounded-lg p-4 transition-all cursor-pointer ${
+                      className={`flex flex-col items-center text-center border rounded-lg p-2 sm:p-4 transition-all cursor-pointer ${
                         isSelected
                           ? "border-teal bg-slate-750 shadow-lg scale-105"
                           : "border-slate-600 bg-slate-750 hover:bg-slate-700 hover:border-slate-500"
                       }`}
                     >
-                      <div className="text-sm font-medium text-slate-300 mb-3 flex items-center gap-1">
+                      <div className="text-xs sm:text-sm font-medium text-slate-300 mb-2 sm:mb-3 flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1">
                         <span>{dayName}</span>
-                        <span className="text-slate-400 font-normal">{date.getMonth() + 1}/{date.getDate()}</span>
+                        <span className="text-slate-400 font-normal text-xs">{date.getMonth() + 1}/{date.getDate()}</span>
                       </div>
-                      <div className="text-2xl font-bold mb-2 tabular-nums text-teal-light">
+                      <div className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 tabular-nums text-teal-light">
                         {getSnowfallRange(day.snowAccumulation)}
                       </div>
-                      <div className="flex items-center justify-center gap-2 text-sm mb-2 tabular-nums">
+                      <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm mb-2 tabular-nums">
                         <span className="text-slate-300">{Math.round((day.tempHigh + day.tempLow) / 2)}°</span>
                         <span className="text-slate-400">{day.windSpeed} mph</span>
                       </div>
-                      <div className="text-3xl mb-3 cursor-pointer relative group">
+                      <div className="text-2xl sm:text-3xl mb-2 sm:mb-3 cursor-pointer relative group">
                         {day.weatherDescription}
                         {/* Custom tooltip */}
                         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 px-3 py-1.5 bg-slate-900 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 border border-slate-600">
@@ -644,7 +644,7 @@ export default function ResortPage() {
                         </div>
                       </div>
                       {/* Three horizontal condition bars */}
-                      <div className="w-full flex gap-0.5 mt-auto pt-3 border-t border-slate-600">
+                      <div className="w-full flex gap-0.5 mt-auto pt-2 sm:pt-3 border-t border-slate-600">
                         {scoresLoading || !forecastDayScores[index] ? (
                           // Loading state: show grey bars
                           <>
@@ -775,9 +775,9 @@ export default function ResortPage() {
                 )}
 
                 {liveLifts && liveLifts.length > 0 && (
-                  <div className="bg-slate-800 rounded-card shadow-sm p-6 border border-slate-700">
+                  <div className="bg-slate-800 rounded-card shadow-sm p-4 sm:p-6 border border-slate-700">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-white">
+                      <h3 className="text-base sm:text-lg font-semibold text-white">
                         Current Lift Status
                       </h3>
                       <span className="text-xs text-slate-400">
@@ -805,11 +805,11 @@ export default function ResortPage() {
                         return (
                           <div
                             key={index}
-                            className="border border-slate-700 rounded-lg p-4 bg-slate-800/50"
+                            className="border border-slate-700 rounded-lg p-3 sm:p-4 bg-slate-800/50"
                           >
                             <div className="flex items-start justify-between mb-3">
                               <div className="flex-1">
-                                <div className="font-semibold text-white text-base mb-1">
+                                <div className="font-semibold text-white text-sm sm:text-base mb-1">
                                   {lift.name}
                                 </div>
                                 <div className="text-sm text-slate-300">
@@ -833,7 +833,7 @@ export default function ResortPage() {
 
                             {/* Lift specifications */}
                             {(lift.manufacturer || lift.yearBuilt || lift.speed || lift.rideTime || lift.length || lift.verticalRise || lift.capacity) && (
-                              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-3">
                                 {lift.manufacturer && (
                                   <div>
                                     <div className="text-xs text-slate-500 uppercase tracking-wide">
@@ -933,9 +933,9 @@ export default function ResortPage() {
             {/* Trail Status Section */}
             {supportedLiftResorts.includes(resortId) && liveTrails && liveTrails.length > 0 && (
               <div className="mb-6">
-                <div className="bg-slate-800 rounded-card shadow-sm p-6 border border-slate-700">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-white">
+                <div className="bg-slate-800 rounded-card shadow-sm p-4 sm:p-6 border border-slate-700">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4">
+                    <h3 className="text-base sm:text-lg font-semibold text-white">
                       Trail Status
                     </h3>
                     {/* Filter buttons */}
@@ -1029,15 +1029,15 @@ export default function ResortPage() {
                         return (
                           <div
                             key={index}
-                            className="border border-slate-700 rounded-lg p-4 bg-slate-800/50"
+                            className="border border-slate-700 rounded-lg p-3 sm:p-4 bg-slate-800/50"
                           >
                             <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-3 flex-1">
-                                <span className={`text-2xl ${difficultyColor}`}>
+                              <div className="flex items-center gap-2 sm:gap-3 flex-1">
+                                <span className={`text-xl sm:text-2xl ${difficultyColor}`}>
                                   {difficultyIcon}
                                 </span>
                                 <div>
-                                  <div className="font-semibold text-white text-base">
+                                  <div className="font-semibold text-white text-sm sm:text-base">
                                     {trail.name}
                                   </div>
                                   <div className="text-sm text-slate-400">
@@ -1046,7 +1046,7 @@ export default function ResortPage() {
                                   </div>
                                 </div>
                               </div>
-                              <div className="flex items-center gap-3">
+                              <div className="flex items-center gap-1 sm:gap-3 flex-wrap">
                                 {trail.isNewlyOpened && (
                                   <span className="text-xs font-semibold text-green-300 bg-green-900/30 px-2 py-1 rounded">
                                     NEW
@@ -1203,12 +1203,12 @@ export default function ResortPage() {
                     </div>
 
                     {!isLiftSpecsCollapsed && (
-                      <div className="px-6 pb-6">
+                      <div className="px-4 sm:px-6 pb-4 sm:pb-6">
                         <div className="grid grid-cols-1 gap-4">
                       {staticLifts.map((lift: LiftDetails, index: number) => (
-                        <div key={index} className="border border-slate-700 rounded-lg p-4 bg-slate-800/50 hover:bg-slate-750 transition-colors">
+                        <div key={index} className="border border-slate-700 rounded-lg p-3 sm:p-4 bg-slate-800/50 hover:bg-slate-750 transition-colors">
                           <div className="mb-3">
-                            <div className="font-semibold text-white text-base mb-1">
+                            <div className="font-semibold text-white text-sm sm:text-base mb-1">
                               {lift.name}
                             </div>
                             <div className="text-sm text-teal">
@@ -1218,7 +1218,7 @@ export default function ResortPage() {
 
                           {/* Lift specifications grid */}
                           {(lift.manufacturer || lift.yearBuilt || lift.speed || lift.rideTime || lift.length || lift.verticalRise || lift.capacity) && (
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-3">
                               {lift.manufacturer && (
                                 <div>
                                   <div className="text-xs text-slate-500 uppercase tracking-wide">
@@ -1327,7 +1327,7 @@ export default function ResortPage() {
               {resortHistories[resortId] && (
                 <div>
                   <div className="mb-6">
-                    <h2 className="text-2xl font-semibold text-white tracking-tight">
+                    <h2 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
                       Resort History
                     </h2>
                     <div className="h-1 w-16 bg-teal rounded-full mt-3"></div>
@@ -1347,7 +1347,7 @@ export default function ResortPage() {
                 return (
                   <div>
                     <div className="mb-6">
-                      <h2 className="text-2xl font-semibold text-white tracking-tight">
+                      <h2 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
                         This Week's Local Spotlight
                       </h2>
                       <div className="h-1 w-16 bg-teal rounded-full mt-3"></div>
@@ -1369,7 +1369,7 @@ export default function ResortPage() {
         {resort.blogUrl && (
           <div className="mb-12">
             <div className="mb-8">
-              <h2 className="text-2xl font-semibold text-white tracking-tight">Weather Blog</h2>
+              <h2 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">Weather Blog</h2>
               <div className="h-1 w-16 bg-teal rounded-full mt-3"></div>
             </div>
             <BlogFeed resortId={resort.id} resortName={resort.name} />
@@ -1391,7 +1391,7 @@ export default function ResortPage() {
       {showGYMTLOverlay && (
         <div className="fixed inset-0 z-50 bg-slate-900/95 backdrop-blur-sm flex items-center justify-center">
           <div className="text-center px-4">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-8">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black mb-4 sm:mb-8">
               {visibleWordIndex >= 1 && (
                 <span className="block animate-fadeIn">
                   <span className="text-teal">G</span>
@@ -1399,25 +1399,25 @@ export default function ResortPage() {
                 </span>
               )}
               {visibleWordIndex >= 2 && (
-                <span className="block mt-4 animate-fadeIn">
+                <span className="block mt-2 sm:mt-4 animate-fadeIn">
                   <span className="text-teal">Y</span>
                   <span className="text-white">OUR</span>
                 </span>
               )}
               {visibleWordIndex >= 3 && (
-                <span className="block mt-4 animate-fadeIn">
+                <span className="block mt-2 sm:mt-4 animate-fadeIn">
                   <span className="text-teal">M</span>
                   <span className="text-white">ONEY</span>
                 </span>
               )}
               {visibleWordIndex >= 4 && (
-                <span className="block mt-4 animate-fadeIn">
+                <span className="block mt-2 sm:mt-4 animate-fadeIn">
                   <span className="text-teal">T</span>
                   <span className="text-white">O</span>
                 </span>
               )}
               {visibleWordIndex >= 5 && (
-                <span className="block mt-4 animate-fadeIn">
+                <span className="block mt-2 sm:mt-4 animate-fadeIn">
                   <span className="text-teal">L</span>
                   <span className="text-white">OCALS</span>
                 </span>
@@ -1427,7 +1427,7 @@ export default function ResortPage() {
             {showCloseButton && (
               <button
                 onClick={() => setShowGYMTLOverlay(false)}
-                className="mt-8 px-8 py-4 bg-teal text-white font-bold text-xl rounded-lg hover:bg-teal-light transition-all duration-300 hover:scale-110 shadow-lg animate-fadeIn"
+                className="mt-4 sm:mt-8 px-6 sm:px-8 py-3 sm:py-4 bg-teal text-white font-bold text-lg sm:text-xl rounded-lg hover:bg-teal-light transition-all duration-300 hover:scale-110 shadow-lg animate-fadeIn"
               >
                 Enter
               </button>

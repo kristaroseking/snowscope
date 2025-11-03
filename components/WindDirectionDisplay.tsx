@@ -154,25 +154,25 @@ export default function WindDirectionDisplay({ hourlyData, targetDate, latitude 
   const sunTimes = getSunriseSunset(latitude, longitude, targetDateObj);
 
   return (
-    <div className="bg-slate-800 rounded-lg shadow-sm p-6 border border-slate-700 mb-6">
+    <div className="bg-slate-800 rounded-lg shadow-sm p-4 sm:p-6 border border-slate-700 mb-6">
       {/* Top row: Wind info on left, Arrow on right */}
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex items-start justify-between mb-6 sm:mb-8">
         {/* Left side - Wind info */}
         <div className="flex flex-col">
-          <div className="text-lg font-semibold text-white mb-2">Wind</div>
-          <div className="space-y-2">
-            <div className="text-4xl font-bold text-teal-light tabular-nums">
+          <div className="text-base sm:text-lg font-semibold text-white mb-2">Wind</div>
+          <div className="space-y-1 sm:space-y-2">
+            <div className="text-2xl sm:text-4xl font-bold text-teal-light tabular-nums">
               {selectedWind.windSpeed}mph {get8DirectionLabel(selectedWind.windDirection)}
             </div>
 
-            <div className="text-xl text-slate-300 tabular-nums">
+            <div className="text-base sm:text-xl text-slate-300 tabular-nums">
               {selectedWind.windGust}mph gust
             </div>
           </div>
         </div>
 
         {/* Right side - Wind Arrow Display */}
-        <div className="relative w-40 h-40 rounded-lg bg-slate-900 flex items-center justify-center">
+        <div className="relative w-24 h-24 sm:w-40 sm:h-40 rounded-lg bg-slate-900 flex items-center justify-center flex-shrink-0">
           <div
             className="relative"
             style={{
@@ -181,7 +181,7 @@ export default function WindDirectionDisplay({ hourlyData, targetDate, latitude 
             }}
           >
             {/* Arrow */}
-            <svg width="100" height="100" viewBox="0 0 100 100">
+            <svg width="60" height="60" viewBox="0 0 100 100" className="sm:w-[100px] sm:h-[100px]">
               {/* Arrow shaft */}
               <line
                 x1="50"
@@ -298,7 +298,7 @@ export default function WindDirectionDisplay({ hourlyData, targetDate, latitude 
       </div>
 
       {/* Hour labels every 3 hours */}
-      <div className="flex relative h-6">
+      <div className="flex relative h-6 text-xs sm:text-sm">
         {[0, 3, 6, 9, 12, 15, 18, 21].map((hour) => {
           // Find the index of this hour in hourlyWindData
           const hourIndex = hourlyWindData.findIndex(h => h.hour === hour);
@@ -313,7 +313,7 @@ export default function WindDirectionDisplay({ hourlyData, targetDate, latitude 
               className="absolute text-center transform -translate-x-1/2"
               style={{ left: `${position}%` }}
             >
-              <span className="text-sm text-slate-400 font-medium">
+              <span className="text-xs sm:text-sm text-slate-400 font-medium">
                 {displayHour}
               </span>
             </div>
@@ -326,12 +326,12 @@ export default function WindDirectionDisplay({ hourlyData, targetDate, latitude 
 
 export function SunTimesCard({ sunTimes }: { sunTimes: { dawn: number; sunrise: number; sunset: number; dusk: number } }) {
   return (
-    <div className="bg-slate-800 rounded-lg shadow-sm p-6 border border-slate-700 mb-6">
-      <div className="flex items-center justify-around">
+    <div className="bg-slate-800 rounded-lg shadow-sm p-4 sm:p-6 border border-slate-700 mb-6">
+      <div className="flex flex-col sm:flex-row items-center justify-around gap-6 sm:gap-0">
         {/* Sunrise section */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           {/* Sunrise icon */}
-          <div className="w-16 h-16">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0">
             <svg viewBox="0 0 64 64" className="w-full h-full">
               {/* Sun */}
               <circle cx="32" cy="40" r="12" fill="#FDB813" />
@@ -347,25 +347,25 @@ export function SunTimesCard({ sunTimes }: { sunTimes: { dawn: number; sunrise: 
           </div>
 
           {/* Times */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1 sm:gap-2">
             <div className="flex flex-col">
               <span className="text-xs text-slate-400">First Light</span>
-              <span className="text-lg text-slate-300 tabular-nums font-semibold">{formatTimeString(sunTimes.dawn)}</span>
+              <span className="text-base sm:text-lg text-slate-300 tabular-nums font-semibold">{formatTimeString(sunTimes.dawn)}</span>
             </div>
             <div className="flex flex-col">
               <span className="text-xs text-slate-400">Sunrise</span>
-              <span className="text-lg text-slate-300 tabular-nums font-semibold">{formatTimeString(sunTimes.sunrise)}</span>
+              <span className="text-base sm:text-lg text-slate-300 tabular-nums font-semibold">{formatTimeString(sunTimes.sunrise)}</span>
             </div>
           </div>
         </div>
 
         {/* Vertical divider */}
-        <div className="h-24 w-px bg-slate-700"></div>
+        <div className="w-24 h-px sm:w-px sm:h-24 bg-slate-700"></div>
 
         {/* Sunset section */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           {/* Sunset icon */}
-          <div className="w-16 h-16">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0">
             <svg viewBox="0 0 64 64" className="w-full h-full">
               {/* Sun */}
               <circle cx="32" cy="40" r="12" fill="#FF6B35" />
@@ -381,14 +381,14 @@ export function SunTimesCard({ sunTimes }: { sunTimes: { dawn: number; sunrise: 
           </div>
 
           {/* Times */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1 sm:gap-2">
             <div className="flex flex-col">
               <span className="text-xs text-slate-400">Sunset</span>
-              <span className="text-lg text-slate-300 tabular-nums font-semibold">{formatTimeString(sunTimes.sunset)}</span>
+              <span className="text-base sm:text-lg text-slate-300 tabular-nums font-semibold">{formatTimeString(sunTimes.sunset)}</span>
             </div>
             <div className="flex flex-col">
               <span className="text-xs text-slate-400">Last Light</span>
-              <span className="text-lg text-slate-300 tabular-nums font-semibold">{formatTimeString(sunTimes.dusk)}</span>
+              <span className="text-base sm:text-lg text-slate-300 tabular-nums font-semibold">{formatTimeString(sunTimes.dusk)}</span>
             </div>
           </div>
         </div>
