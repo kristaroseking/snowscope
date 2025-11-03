@@ -682,6 +682,10 @@ export default function ResortPage() {
               <SnowAccumulationDisplay
                 hourlyData={weatherData.hourly[selectedElevation]}
                 targetDate={forecast[selectedElevation][selectedDay]?.date}
+                latitude={resort.latitude}
+                longitude={resort.longitude}
+                selectedHourIndex={selectedHourIndex}
+                onHourIndexChange={setSelectedHourIndex}
               />
             )}
 
