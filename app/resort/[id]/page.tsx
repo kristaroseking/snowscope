@@ -627,14 +627,14 @@ export default function ResortPage() {
                     >
                       <div className="text-xs sm:text-sm font-medium text-slate-300 mb-2 sm:mb-3 flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1">
                         <span>{dayName}</span>
-                        <span className="text-slate-400 font-normal text-xs">{date.getMonth() + 1}/{date.getDate()}</span>
+                        <span className="text-slate-400 font-normal text-[10px] sm:text-xs">{date.getMonth() + 1}/{date.getDate()}</span>
                       </div>
-                      <div className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 tabular-nums text-teal-light">
+                      <div className="text-lg sm:text-2xl font-bold mb-1 sm:mb-2 tabular-nums text-teal-light whitespace-nowrap">
                         {getSnowfallRange(day.snowAccumulation)}
                       </div>
                       <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm mb-2 tabular-nums">
                         <span className="text-slate-300">{Math.round((day.tempHigh + day.tempLow) / 2)}°</span>
-                        <span className="text-slate-400">{day.windSpeed} mph</span>
+                        <span className="text-slate-400 text-[10px] sm:text-xs whitespace-nowrap">{day.windSpeed} mph</span>
                       </div>
                       <div className="text-2xl sm:text-3xl mb-2 sm:mb-3 cursor-pointer relative group">
                         {day.weatherDescription}
@@ -645,8 +645,15 @@ export default function ResortPage() {
                       </div>
                       {/* Three horizontal condition bars */}
                       <div className="w-full flex gap-0.5 mt-auto pt-2 sm:pt-3 border-t border-slate-600">
-                        {scoresLoading || !forecastDayScores[index] ? (
-                          // Loading state: show grey bars
+                        {!isResortOpen() ? (
+                          // Resort closed: show grey bars
+                          <>
+                            <div className="flex-1 h-2 rounded-full bg-slate-600" title="Resort Closed" />
+                            <div className="flex-1 h-2 rounded-full bg-slate-600" title="Resort Closed" />
+                            <div className="flex-1 h-2 rounded-full bg-slate-600" title="Resort Closed" />
+                          </>
+                        ) : scoresLoading || !forecastDayScores[index] ? (
+                          // Loading state: show grey bars with pulse
                           <>
                             <div className="flex-1 h-2 rounded-full bg-slate-600 animate-pulse" title="Morning" />
                             <div className="flex-1 h-2 rounded-full bg-slate-600 animate-pulse" title="Afternoon" />
