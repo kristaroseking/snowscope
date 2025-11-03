@@ -252,9 +252,13 @@ export default function CombinedWindSnowDisplay({ hourlyData, targetDate, latitu
 
               return (
                 <div key={index} className="flex-1 flex flex-col items-center justify-end gap-0.5 relative group" style={{ minWidth: `${100 / hourlyCombinedData.length}%` }}>
-                  {/* Combined tooltip - shows wind, snow, and temp */}
+                  {/* Combined tooltip - shows time, temp, wind, and snow */}
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-slate-900 text-white text-xs font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 border border-slate-600">
                     <div className="flex flex-col gap-1">
+                      {/* Time display at top */}
+                      <div className="text-center font-bold text-white pb-1 border-b border-slate-600">
+                        {data.time}
+                      </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-orange-400 rounded"></div>
                         <span>{data.temp}°F</span>
