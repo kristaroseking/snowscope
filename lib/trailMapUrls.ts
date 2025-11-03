@@ -87,6 +87,31 @@ export const trailMapUrls: Record<string, TrailMapData> = {
     pdfUrl: "https://www.livigno.eu/hubfs/Skipass%20Livigno%20mappa%20impianti%20completa%20A4-2024_2025%20(1)-1-1.pdf",
     source: "Livigno Ski Area",
   },
+  "magic-mountain": {
+    imageUrl: "https://cdn.bfldr.com/WIENNW6Q/as/fq8hcjxhgchn8fkf7fvtr6/Magic_Mountain?auto=webp&format=png&width=2048",
+    pdfUrl: undefined,
+    source: "Magic Mountain",
+  },
+  sugarloaf: {
+    imageUrl: "https://cdn.bfldr.com/WIENNW6Q/as/2x4vknm3xhr8gmn5bkpm8wz/Sugarloaf?auto=webp&width=2048",
+    pdfUrl: undefined,
+    source: "Sugarloaf",
+  },
+  "arapahoe-basin": {
+    imageUrl: "https://www.myskimaps.com/Ski-Maps/USA/Arapahoe-Basin-Ski-Trail-Map-Frontside-2023.jpg",
+    pdfUrl: "https://www.myskimaps.com/Ski-Maps/USA/Arapahoe-Basin-Ski-Trail-Map-Frontside-2023.pdf",
+    source: "Arapahoe Basin",
+  },
+  tremblant: {
+    imageUrl: "https://cdn.bfldr.com/WIENNW6Q/as/htqhgtfqb53zcgcjcpnzcgfz/Tremblant?auto=webp&format=png&width=2048",
+    pdfUrl: "https://medias.tremblant.ca/pdf/cartes/carte-pistes-tremblant.pdf",
+    source: "Mont Tremblant",
+  },
+  revelstoke: {
+    imageUrl: "https://cdn.bfldr.com/WIENNW6Q/as/4b2f2mns7hsv7rv96xmffxm/Revelstoke_Canada_trail-map_2804?auto=webp&format=png&width=2048",
+    pdfUrl: "https://www.revelstokemountainresort.com/site/assets/files/2840/revelstoke-mountain-resort-winter-map-2023-24.pdf",
+    source: "Revelstoke Mountain Resort",
+  },
 };
 
 /**
