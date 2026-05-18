@@ -101,6 +101,7 @@ export default function Home() {
     <div className="min-h-screen bg-slate-900">
       <header className="bg-slate-800 border-b border-slate-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <h1 className="sr-only">Snowscope</h1>
           <SnowscopeLogo className="h-12 w-auto" />
         </div>
       </header>
@@ -230,7 +231,7 @@ export default function Home() {
                   {/* Mobile: Compact dropdown filters */}
                   <div className="lg:hidden space-y-3 mb-6">
                     <div>
-                      <label className="block text-xs text-slate-500 uppercase tracking-wide mb-2">
+                      <label className="block text-xs text-slate-400 uppercase tracking-wide mb-2">
                         Geographic Region
                       </label>
                       <select
@@ -247,7 +248,7 @@ export default function Home() {
                     </div>
 
                     <div>
-                      <label className="block text-xs text-slate-500 uppercase tracking-wide mb-2">
+                      <label className="block text-xs text-slate-400 uppercase tracking-wide mb-2">
                         Mountain Daddy
                       </label>
                       <select
@@ -270,9 +271,9 @@ export default function Home() {
                       <div className="flex-1">
                         {/* Geographic Region Section */}
                         <div className="mb-6">
-                          <h3 className="text-xs text-slate-500 uppercase tracking-wide mb-3">
+                          <h2 className="text-xs text-slate-400 uppercase tracking-wide mb-3">
                             Geographic Region
-                          </h3>
+                          </h2>
                           <div className="flex gap-3 flex-wrap">
                             {regions.map((region) => (
                               <button
@@ -280,7 +281,7 @@ export default function Home() {
                                 onClick={() => setSelectedRegion(region)}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                                   selectedRegion === region
-                                    ? "bg-teal text-white shadow-lg"
+                                    ? "bg-teal text-slate-900 shadow-lg"
                                     : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600"
                                 }`}
                               >
@@ -292,9 +293,9 @@ export default function Home() {
 
                         {/* Mountain Daddy Section */}
                         <div>
-                          <h3 className="text-xs text-slate-500 uppercase tracking-wide mb-3">
+                          <h2 className="text-xs text-slate-400 uppercase tracking-wide mb-3">
                             Mountain Daddy
-                          </h3>
+                          </h2>
                           <div className="flex gap-3 flex-wrap">
                             {(["All", "Epic", "Ikon", "Indy", "Independent"] as const).map((pass) => (
                               <button
@@ -302,7 +303,7 @@ export default function Home() {
                                 onClick={() => setSelectedPass(pass)}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                                   selectedPass === pass
-                                    ? "bg-purple text-white shadow-lg"
+                                    ? "bg-purple-dark text-white shadow-lg"
                                     : "bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600"
                                 }`}
                               >
