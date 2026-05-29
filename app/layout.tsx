@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Mono, Courier_Prime } from "next/font/google";
 import "./globals.css";
+import { LocaleProvider } from "@/components/LocaleProvider";
 
 const spaceMono = Space_Mono({
   subsets: ["latin"],
@@ -48,7 +49,7 @@ export default function RootLayout({
         className={`${spaceMono.variable} ${courierPrime.variable} antialiased`}
         style={{ fontFamily: "var(--font-space-mono)" }}
       >
-        {children}
+        <LocaleProvider>{children}</LocaleProvider>
       </body>
     </html>
   );

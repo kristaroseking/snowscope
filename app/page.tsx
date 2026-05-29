@@ -6,6 +6,8 @@ import ResortForecastRow from "@/components/ResortForecastRow";
 import SnowscopeLogo from "@/components/SnowscopeLogo";
 import LoadingState from "@/components/LoadingState";
 import ErrorState from "@/components/ErrorState";
+import LocaleSelector from "@/components/LocaleSelector";
+import { useLocale } from "@/components/LocaleProvider";
 import { ResortWeather, Region } from "@/types";
 
 // Dynamically import the map to avoid SSR issues
@@ -19,7 +21,14 @@ const ResortMap = dynamic(() => import("@/components/ResortMap"), {
 });
 
 export default function Home() {
+  const { t, locale, formatCurrency, formatDate } = useLocale();
   const [weatherData, setWeatherData] = useState<ResortWeather[]>([]);
+  const [today, setToday] = useState<Date | null>(null);
+
+  // Set the current date on the client to avoid SSR/client hydration mismatch.
+  useEffect(() => {
+    setToday(new Date());
+  }, []);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<Region | "All">("All");
@@ -100,13 +109,33 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-slate-900">
       <header className="bg-slate-800 border-b border-slate-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="sr-only">Snowscope</h1>
-          <SnowscopeLogo className="h-12 w-auto" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between gap-4">
+          <div>
+            <h1 className="sr-only">Snowscope</h1>
+            <SnowscopeLogo className="h-12 w-auto" />
+          </div>
+          <LocaleSelector />
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Localized greeting hero */}
+        <section className="mb-10">
+          <p className="text-teal text-sm uppercase tracking-wide mb-2">
+            {today ? formatDate(today) : " "}
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">
+            {t("greeting")}
+          </h2>
+          <p className="text-slate-300 text-lg mt-2">{t("tagline")}</p>
+          <p className="text-slate-400 text-sm mt-3">
+            {t("passesFrom")}{" "}
+            <span className="text-teal-light font-semibold">
+              {formatCurrency(1234.56)}
+            </span>
+          </p>
+        </section>
+
         {/* Tabs with Most Snow Banner */}
         <div className="mb-8 border-b border-slate-700 -mx-4 sm:mx-0">
           <div className="overflow-x-auto scrollbar-hide px-4 sm:px-0">
@@ -119,7 +148,7 @@ export default function Home() {
                     : "text-slate-400 hover:text-slate-300"
                 }`}
               >
-                Resorts
+                {t("resorts")}
                 {selectedTab === "resorts" && (
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-teal rounded-full"></div>
                 )}
@@ -132,7 +161,7 @@ export default function Home() {
                     : "text-slate-400 hover:text-slate-300"
                 }`}
               >
-                Backcountry
+                {t("backcountry")}
                 {selectedTab === "backcountry" && (
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-teal rounded-full"></div>
                 )}
@@ -145,7 +174,7 @@ export default function Home() {
                     : "text-slate-400 hover:text-slate-300"
                 }`}
               >
-                Trip Planning
+                {t("tripPlanning")}
                 {selectedTab === "trip-planning" && (
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-teal rounded-full"></div>
                 )}
@@ -158,7 +187,7 @@ export default function Home() {
                     : "text-slate-400 hover:text-slate-300"
                 }`}
               >
-                Map View
+                {t("mapView")}
                 {selectedTab === "map-view" && (
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-teal rounded-full"></div>
                 )}
@@ -181,7 +210,7 @@ export default function Home() {
                     <div className="flex-1">
                       <input
                         type="text"
-                        placeholder="Search resorts..."
+                        placeholder={t("search")}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal focus:border-transparent"
@@ -216,7 +245,7 @@ export default function Home() {
                           >
                             <span className="text-lg">⭐</span>
                             <div className="text-left">
-                              <p className="text-xs text-slate-400">Most snow</p>
+                              <p className="text-xs text-slate-400">{t("mostSnow")}</p>
                               <p className="text-sm text-white font-medium">
                                 {topResort.resort.name} <span className="text-teal-light">{topResort.totalSnow.toFixed(0)}"</span>
                               </p>
@@ -232,7 +261,7 @@ export default function Home() {
                   <div className="lg:hidden space-y-3 mb-6">
                     <div>
                       <label className="block text-xs text-slate-400 uppercase tracking-wide mb-2">
-                        Geographic Region
+                        {t("region")}
                       </label>
                       <select
                         value={selectedRegion}
@@ -249,7 +278,7 @@ export default function Home() {
 
                     <div>
                       <label className="block text-xs text-slate-400 uppercase tracking-wide mb-2">
-                        Mountain Daddy
+                        {t("mountainDaddy")}
                       </label>
                       <select
                         value={selectedPass}
@@ -272,7 +301,7 @@ export default function Home() {
                         {/* Geographic Region Section */}
                         <div className="mb-6">
                           <h2 className="text-xs text-slate-400 uppercase tracking-wide mb-3">
-                            Geographic Region
+                            {t("region")}
                           </h2>
                           <div className="flex gap-3 flex-wrap">
                             {regions.map((region) => (
@@ -294,7 +323,7 @@ export default function Home() {
                         {/* Mountain Daddy Section */}
                         <div>
                           <h2 className="text-xs text-slate-400 uppercase tracking-wide mb-3">
-                            Mountain Daddy
+                            {t("mountainDaddy")}
                           </h2>
                           <div className="flex gap-3 flex-wrap">
                             {(["All", "Epic", "Ikon", "Indy", "Independent"] as const).map((pass) => (
@@ -327,7 +356,7 @@ export default function Home() {
                   ))}
                   {filteredWeatherData.length === 0 && (
                     <div className="text-center py-12 text-slate-400">
-                      No resorts found for this region.
+                      {t("noResorts")}
                     </div>
                   )}
                 </div>
@@ -372,7 +401,7 @@ export default function Home() {
       <footer className="bg-slate-800 border-t border-slate-700 mt-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <p className="text-center text-slate-400 text-sm">
-            Powered by NOAA, GFS, and HRRR weather models
+            {t("footer")}
           </p>
         </div>
       </footer>
